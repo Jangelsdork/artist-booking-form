@@ -3,6 +3,7 @@ import { Inter as FontSans} from 'next/font/google'
 import './globals.css'
 import { cn } from "../../lib/utils"
 import { ThemeProvider } from "@/components/theme-provider"
+import { ModeToggle } from '@/components/mode-toggle'
 
 
 // const inter = Inter({ subsets: ['latin'] })
@@ -28,12 +29,13 @@ export default function RootLayout({
       <body className={cn(
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
-        )}>  <ThemeProvider
+        )}> <ThemeProvider
         attribute="class"
         defaultTheme="system"
         enableSystem
         disableTransitionOnChange
-      >{children}</ThemeProvider> </body> 
+      >{children}</ThemeProvider>      
+      </body> 
     </html>
   )
 }
