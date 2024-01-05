@@ -1,9 +1,10 @@
-"use client"
 
-import * as z from "zod"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+
+import * as z from "zod"
+
 const dayjs = require('dayjs')
 
 import { Button } from "@/components/ui/button"
@@ -84,6 +85,7 @@ const formSchema = z.object({
 
 
 export function BookingForm() {
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -152,6 +154,7 @@ export function BookingForm() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
   }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
