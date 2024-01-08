@@ -1,11 +1,8 @@
-
-
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+'use client'
 
 import * as z from "zod"
-
-const dayjs = require('dayjs')
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -18,6 +15,12 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+
+
+
+const dayjs = require('dayjs')
+
+
 
 
 const today:Date = dayjs().format("YYYY-MM-DD")
@@ -84,6 +87,7 @@ const formSchema = z.object({
 })
 
 
+// eslint-disable-next-line import/prefer-default-export
 export function BookingForm() {
   
   const form = useForm<z.infer<typeof formSchema>>({
@@ -156,8 +160,10 @@ export function BookingForm() {
   }
 
   return (
+    <div>
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">Your details
         <FormField
           control={form.control}
           name="first_name"
@@ -168,15 +174,33 @@ export function BookingForm() {
                 <Input placeholder="John" {...field} />
               </FormControl>
               <FormDescription>
-                Your name / contact perrson for this booking
+                Your name or contact person for this booking
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="last_name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Last Name</FormLabel>
+              <FormControl>
+                <Input placeholder="John" {...field} />
+              </FormControl>
+              <FormDescription>
+                Your name or contact person for this booking
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        </h2>
         <Button type="submit">Submit</Button>
       </form>
     </Form>
+    </div>
   )
 
 }

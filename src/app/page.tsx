@@ -1,5 +1,6 @@
-"use client"
+'use client'
 
+import { BookingForm } from '@/components/BookingForm'
 import { ModeToggle } from '@/components/mode-toggle'
 import Image from 'next/image'
 import { Form } from 'react-hook-form'
@@ -11,7 +12,7 @@ export default function Home() {
         <ModeToggle/> 
         </div>
       <h1  className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">We are E Artist Booking Form</h1>
-      <Form />
+      <BookingForm />
     </main>
   )
 }
