@@ -16,7 +16,13 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 const dayjs = require('dayjs')
 
@@ -164,6 +170,7 @@ export function BookingForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
       <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">Your details
+      <div className="grid grid-cols-2 gap-x-8">
         <FormField
           control={form.control}
           name="first_name"
@@ -171,7 +178,7 @@ export function BookingForm() {
             <FormItem>
               <FormLabel>First Name</FormLabel>
               <FormControl>
-                <Input placeholder="John" {...field} />
+                <Input placeholder="Vince" {...field} />
               </FormControl>
               <FormDescription>
                 Your name or contact person for this booking
@@ -187,15 +194,97 @@ export function BookingForm() {
             <FormItem>
               <FormLabel>Last Name</FormLabel>
               <FormControl>
-                <Input placeholder="John" {...field} />
+                <Input placeholder="Noir" {...field} />
               </FormControl>
               <FormDescription>
-                Your name or contact person for this booking
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="kingofthemods@yahoo.co.uk" {...field} />
+              </FormControl>
+              <FormDescription>
+                Contact person email address
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Phone number</FormLabel>
+              <FormControl>
+                <Input placeholder="+44 123 ... ... " {...field} />
+              </FormControl>
+              <FormDescription>
+                Contact person phone number - please include the country code
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        </div>
+        </h2>
+        <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">Booking request
+        <div className="grid grid-cols-2">
+        <FormField
+          control={form.control}
+          name="artist_name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Artist</FormLabel>
+              <FormControl>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Select an artist..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="satori">Satori</SelectItem>
+                  <SelectItem value="sabo">Sabo</SelectItem>
+                  <SelectItem value="oceanvs" >Oceanvs Orientalis</SelectItem>
+                </SelectContent>
+              </Select>
+              </FormControl>
+      
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="artist_name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Performance type</FormLabel>
+              <FormControl>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Select... " />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="dj">DJ Set</SelectItem>
+                  <SelectItem value="live">Live Set</SelectItem>
+                  <SelectItem value="hybrid" >Hybrid Set</SelectItem>
+                </SelectContent>
+              </Select>
+              </FormControl>
+      
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        </div>
         </h2>
         <Button type="submit">Submit</Button>
       </form>
