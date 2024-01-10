@@ -4,6 +4,8 @@ import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
+import { useState } from "react"
+
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -24,6 +26,18 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+// imports for date picker
+import { format } from "date-fns"
+import { Calendar as CalendarIcon } from "lucide-react"
+ 
+import { cn } from "@/lib/utils"
+import { Calendar } from "@/components/ui/calendar"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+
 const dayjs = require('dayjs')
 
 
@@ -39,7 +53,7 @@ const formSchema = z.object({
   artist_name: z.string().min(2).max(50),
   type_performance: z.string().min(2).max(8),
   event_date: z.coerce.date().min(new Date(today), { message: "Date must be in the future" }),
-  alternative_dates: z.string().min(2).max(50),
+  alternative_dates: z.string().min(2).max(50).optional(),
   event_name: z.string().min(2).max(50),
   financial_offer: z.number(),
   currency: z.string().min(3).max(3),
@@ -95,6 +109,9 @@ const formSchema = z.object({
 
 // eslint-disable-next-line import/prefer-default-export
 export function BookingForm() {
+
+  const [date, setDate] = useState<Date>()
+
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -108,7 +125,7 @@ export function BookingForm() {
       event_date: today,
       alternative_dates: "",
       event_name: "",
-      financial_offer: 0,
+      financial_offer: 100,
       currency: "EUR",
       wht: false,
       wht_amount: 0,
@@ -167,129 +184,262 @@ export function BookingForm() {
 
   return (
     <div>
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-      <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">Your details
-      <div className="grid grid-cols-2 gap-x-8">
-        <FormField
-          control={form.control}
-          name="first_name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>First Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Vince" {...field} />
-              </FormControl>
-              <FormDescription>
-                Your name or contact person for this booking
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="last_name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Last Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Noir" {...field} />
-              </FormControl>
-              <FormDescription>
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="kingofthemods@yahoo.co.uk" {...field} />
-              </FormControl>
-              <FormDescription>
-                Contact person email address
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="phone"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Phone number</FormLabel>
-              <FormControl>
-                <Input placeholder="+44 123 ... ... " {...field} />
-              </FormControl>
-              <FormDescription>
-                Contact person phone number - please include the country code
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        </div>
-        </h2>
-        <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">Booking request
-        <div className="grid grid-cols-2">
-        <FormField
-          control={form.control}
-          name="artist_name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Artist</FormLabel>
-              <FormControl>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select an artist..." />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="satori">Satori</SelectItem>
-                  <SelectItem value="sabo">Sabo</SelectItem>
-                  <SelectItem value="oceanvs" >Oceanvs Orientalis</SelectItem>
-                </SelectContent>
-              </Select>
-              </FormControl>
-      
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="artist_name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Performance type</FormLabel>
-              <FormControl>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select... " />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="dj">DJ Set</SelectItem>
-                  <SelectItem value="live">Live Set</SelectItem>
-                  <SelectItem value="hybrid" >Hybrid Set</SelectItem>
-                </SelectContent>
-              </Select>
-              </FormControl>
-      
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        </div>
-        </h2>
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+            Your details
+            <div className="grid grid-cols-2 gap-x-8">
+              <FormField
+                control={form.control}
+                name="first_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>First Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Vince" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      Your name or contact person for this booking
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="last_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Last Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Noir" {...field} />
+                    </FormControl>
+                    <FormDescription></FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="kingofthemods@yahoo.co.uk"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Contact person email address
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone number</FormLabel>
+                    <FormControl>
+                      <Input placeholder="+44 123 ... ... " {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      Contact person phone number - please include the country
+                      code
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </h2>
+          <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+            Booking request
+            <div className="grid grid-cols-2 gap-x-8">
+              <FormField
+                control={form.control}
+                name="artist_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Artist</FormLabel>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger className="w-[180px]">
+                          <SelectValue placeholder="Select an artist..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="satori">Satori</SelectItem>
+                          <SelectItem value="sabo">Sabo</SelectItem>
+                          <SelectItem value="oceanvs">
+                            Oceanvs Orientalis
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="artist_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Performance type</FormLabel>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger className="w-[180px]">
+                          <SelectValue placeholder="Select... " />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="dj">DJ Set</SelectItem>
+                          <SelectItem value="live">Live Set</SelectItem>
+                          <SelectItem value="hybrid">Hybrid Set</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="event_date"
+                render={() => (
+                  <FormItem>
+                    <FormLabel className="flex flex-col pt-4 pb-1">Event Date</FormLabel>
+                    <FormControl>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-[280px] justify-start text-left font-normal",
+                              !date && "text-muted-foreground"
+                            )}
+                          >
+                            <CalendarIcon className="mr-2 h-4 w-4" />
+                            {date ? (
+                              format(date, "PPP")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0">
+                          <Calendar
+                            mode="single"
+                            selected={date}
+                            onSelect={setDate}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="alternative_dates"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Alternative dates if applicable</FormLabel>
+                    <FormControl>
+                    <Input
+                        placeholder="dd.mm.yyyy, dd.mm.yyyy..."
+                        {...field}
+                      />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            
+              <FormField
+                control={form.control}
+                name="artist_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Performance type</FormLabel>
+                    <FormControl>
+                    <Input placeholder="The Pie Face Showcase" {...field} />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex flex-row gap-4">
+             <FormField
+                control={form.control}
+                name="financial_offer"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Financial Offer</FormLabel>
+                    <FormControl>
+                    <Input 
+                    type="number" 
+                    placeholder="10000" 
+                    {...field}
+                    onChange={event => field.onChange(+event.target.value)} />
+
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="currency"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Currency</FormLabel>
+                    <FormControl>
+                    <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger className="w-[180px]">
+                          <SelectValue placeholder="Select... " />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="EUR">EUR</SelectItem>
+                          <SelectItem value="USD">USD</SelectItem>
+                          <SelectItem value="AUD">AUD</SelectItem>
+                          <SelectItem value="GBP">GBP</SelectItem>
+                          <SelectItem value="CAD">CAD</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              </div>
+            </div>
+          </h2>
+          <Button type="submit">Submit</Button>
+        </form>
+      </Form>
     </div>
-  )
+  );
 
 }
