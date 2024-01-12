@@ -38,6 +38,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
+import { Switch } from "@/components/ui/switch"
+
+
 const dayjs = require('dayjs')
 
 
@@ -58,7 +61,7 @@ const formSchema = z.object({
   financial_offer: z.number(),
   currency: z.string().min(3).max(3),
   wht: z.boolean(),
-  wht_amount: z.number().lt(100).positive(),
+  wht_amount: z.number().lt(100).positive().optional(),
   role: z.string().min(2).max(50),
   venue_name: z.string().min(2).max(50),
   venue_street: z.string().min(2).max(50),
@@ -433,7 +436,26 @@ export function BookingForm() {
                   </FormItem>
                 )}
               />
+
               </div>
+              <FormField
+                control={form.control}
+                name="wht"
+                render={({ field }) => (
+                  <FormItem >
+                    <FormLabel>Is Withholding tax applicable to this offer?</FormLabel>
+                    <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />                    
+                    </FormControl>
+                    <FormDescription>
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
           </h2>
           <Button type="submit">Submit</Button>
