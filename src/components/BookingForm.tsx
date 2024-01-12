@@ -189,7 +189,7 @@ export function BookingForm() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">
             Your details
-            <div className="grid grid-cols-2 gap-x-8">
+            <div className="sm:grid sm:grid-cols-2 gap-x-8">
               <FormField
                 control={form.control}
                 name="first_name"
@@ -260,7 +260,7 @@ export function BookingForm() {
           </h2>
           <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">
             Booking request
-            <div className="grid grid-cols-2 gap-x-8">
+            <div className="sm:grid sm:grid-cols-2 gap-x-8">
               <FormField
                 control={form.control}
                 name="artist_name"
