@@ -115,7 +115,6 @@ export function BookingForm() {
 
   const [date, setDate] = useState<Date>()
 
-  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -179,7 +178,6 @@ export function BookingForm() {
       additional: "",
     },
   })
-
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
@@ -442,7 +440,7 @@ export function BookingForm() {
                 control={form.control}
                 name="wht"
                 render={({ field }) => (
-                  <FormItem >
+                  <FormItem className="flex flex-col pt-4 pb-1" >
                     <FormLabel>Is Withholding tax applicable to this offer?</FormLabel>
                     <FormControl>
                     <Switch
