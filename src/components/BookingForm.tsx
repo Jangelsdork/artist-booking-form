@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 'use client'
 
 import * as z from "zod"
@@ -39,12 +40,9 @@ import {
 } from "@/components/ui/popover"
 
 import { Switch } from "@/components/ui/switch"
-import { watch } from "fs"
 
 
 const dayjs = require('dayjs')
-
-
 
 
 const today:Date = dayjs().format("YYYY-MM-DD")
@@ -116,6 +114,29 @@ export function BookingForm() {
 
   const [date, setDate] = useState<Date>()
 
+  function WhtInput(form: any){
+    return (
+      <FormField
+                control={form.control}
+                name="wht_amount"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Withholding tax amount{'('}%{')'}</FormLabel>
+                    <FormControl>
+                    <Input 
+                    type="number" 
+                    placeholder="10" 
+                    {...field}
+                    onChange={event => field.onChange(+event.target.value)} />
+
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+    )
+  } 
 
 const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -183,7 +204,6 @@ const form = useForm<z.infer<typeof formSchema>>({
 
   console.log(form.control._formValues.first_name)  
   console.log(form.control._formValues.wht)  
-  watch("wht")
   
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
@@ -447,9 +467,10 @@ const form = useForm<z.infer<typeof formSchema>>({
                 name="wht"
                 render={({ field }) => (
                   <FormItem className="flex flex-col pt-4 pb-1" >
-                    <FormLabel>Is Withholding tax applicable to this offer?</FormLabel>
+                    <FormLabel className="pb-4">Is Withholding tax applicable to this offer?</FormLabel>
                     <FormControl>
                     <Switch
+                      
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />                    
@@ -460,7 +481,70 @@ const form = useForm<z.infer<typeof formSchema>>({
                   </FormItem>
                 )}
               />
+              
+              <div>{form.control._formValues.wht ? <WhtInput /> : ""}</div>
             </div>
+            <FormField
+                control={form.control}
+                name="role"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Role</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Event promoter, club buyer, etc..." {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      Please clarify your role in regards to this booking
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+          </h2>
+          <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">Venue information
+          <div className="sm:grid sm:grid-cols-2 gap-x-8">
+          <FormField
+                control={form.control}
+                name="venue_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Venue name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="The Velvet Onion" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="grid grid-cols-[2fr,1fr] gap-x-4">
+              <FormField
+                control={form.control}
+                name="venue_street"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Street</FormLabel>
+                    <FormControl>
+                      <Input placeholder="First Street" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+              control={form.control}
+              name="venue_number"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>House number</FormLabel>
+                  <FormControl>
+                    <Input placeholder="100a" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+              </div>
+          </div>
           </h2>
           <Button type="submit">Submit</Button>
         </form>
