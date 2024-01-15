@@ -39,6 +39,7 @@ import {
 } from "@/components/ui/popover"
 
 import { Switch } from "@/components/ui/switch"
+import { watch } from "fs"
 
 
 const dayjs = require('dayjs')
@@ -182,6 +183,7 @@ const form = useForm<z.infer<typeof formSchema>>({
 
   console.log(form.control._formValues.first_name)  
   console.log(form.control._formValues.wht)  
+  watch("wht")
   
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
