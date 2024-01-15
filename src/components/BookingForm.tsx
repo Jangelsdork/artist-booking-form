@@ -115,7 +115,8 @@ export function BookingForm() {
 
   const [date, setDate] = useState<Date>()
 
-  const form = useForm<z.infer<typeof formSchema>>({
+
+const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       first_name: "",
@@ -179,6 +180,9 @@ export function BookingForm() {
     },
   })
 
+  console.log(form.control._formValues.first_name)  
+  console.log(form.control._formValues.wht)  
+  
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
   }
