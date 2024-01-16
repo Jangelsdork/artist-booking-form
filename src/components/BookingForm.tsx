@@ -418,7 +418,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                 name="financial_offer"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Financial Offer</FormLabel>
+                    <FormLabel>Offer amount</FormLabel>
                     <FormControl>
                     <Input 
                     type="number" 
@@ -516,7 +516,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   </FormItem>
                 )}
               />
-              <div className="grid grid-cols-[2fr,1fr] gap-x-4">
+              <div className="grid grid-cols-[1fr,0.4fr] gap-x-4">
               <FormField
                 control={form.control}
                 name="venue_street"
@@ -535,7 +535,7 @@ const form = useForm<z.infer<typeof formSchema>>({
               name="venue_number"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>House number</FormLabel>
+                  <FormLabel>House no.</FormLabel>
                   <FormControl>
                     <Input placeholder="100a" {...field} />
                   </FormControl>
@@ -543,7 +543,75 @@ const form = useForm<z.infer<typeof formSchema>>({
                 </FormItem>
               )}
             />
+            
               </div>
+              <FormField
+                control={form.control}
+                name="venue_city"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>City</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Dalston" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="venue_country"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Country</FormLabel>
+                    <FormControl>
+                      <Input placeholder="UK" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="grid grid-cols-2 gap-x-4">
+              <FormField
+              control={form.control}
+              name="venue_capacity"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Capacity</FormLabel>
+                  <FormControl>
+                    <Input placeholder="300" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="vip_tables"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>VIP tables</FormLabel>
+                  <FormControl>
+                    <Input placeholder="10" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            </div>
+            <FormField
+                control={form.control}
+                name="venue_website"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Venue website</FormLabel>
+                    <FormControl>
+                      <Input placeholder="www.velvet-onion.co.uk" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
           </div>
           </h2>
           <Button type="submit">Submit</Button>
