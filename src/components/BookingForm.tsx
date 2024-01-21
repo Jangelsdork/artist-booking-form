@@ -79,7 +79,7 @@ const formSchema = z.object({
   other_artists: z.string().min(2).max(500),
   artist_stage: z.string().min(2).max(50),
   proposed_playtime: z.string().min(2).max(20),
-  proposed_timetable: z.string().min(2).max(100),
+  proposed_timetable: z.string().min(2).max(200),
   load_in: z.string().min(2).max(50),
   soundcheck: z.string().min(2).max(50),
   doors_open: z.string().min(2).max(50),
@@ -317,7 +317,7 @@ const form = useForm<z.infer<typeof formSchema>>({
               />
               <FormField
                 control={form.control}
-                name="artist_name"
+                name="type_performance"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Performance type</FormLabel>
@@ -361,7 +361,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                             {date ? (
                               format(date, "PPP")
                             ) : (
-                              <span>Pick a date</span>
+                              <span>Select date</span>
                             )}
                           </Button>
                         </PopoverTrigger>
@@ -400,7 +400,7 @@ const form = useForm<z.infer<typeof formSchema>>({
             
               <FormField
                 control={form.control}
-                name="artist_name"
+                name="event_name"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Performance type</FormLabel>
@@ -607,6 +607,161 @@ const form = useForm<z.infer<typeof formSchema>>({
                     <FormLabel>Venue website</FormLabel>
                     <FormControl>
                       <Input placeholder="www.velvet-onion.co.uk" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="sound_system"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Sound System</FormLabel>
+                    <FormControl>
+                      <Input placeholder="function one" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="stage_or_booth"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Stage or Booth?</FormLabel>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger className="w-[180px]">
+                          <SelectValue placeholder="Select... " />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="booth">DJ booth</SelectItem>
+                          <SelectItem value="stage">Stage</SelectItem>
+                          <SelectItem value="other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="ticket_price_adv"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Ticket price in advance</FormLabel>
+                    <FormControl>
+                    <Input 
+                    type="number" 
+                    placeholder="10000" 
+                    {...field}
+                    onChange={event => field.onChange(+event.target.value)} />
+
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="ticket_price_dos"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Ticket price @ door</FormLabel>
+                    <FormControl>
+                    <Input 
+                    type="number" 
+                    placeholder="10" 
+                    {...field}
+                    onChange={event => field.onChange(+event.target.value)} />
+
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="billing"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Billing</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Headliner" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="announcement"
+                render={() => (
+                  <FormItem>
+                    <FormLabel className="flex flex-col pt-4 pb-1">Announcement date</FormLabel>
+                    <FormControl>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-[280px] justify-start text-left font-normal",
+                              !date && "text-muted-foreground"
+                            )}
+                          >
+                            <CalendarIcon className="mr-2 h-4 w-4" />
+                            {date ? (
+                              format(date, "PPP")
+                            ) : (
+                              <span>Select date</span>
+                            )}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0">
+                          <Calendar
+                            mode="single"
+                            selected={date}
+                            onSelect={setDate}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="other_artists"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Other artists</FormLabel>
+                    <FormControl>
+                      <Input placeholder="David Guetta, Tiesto..." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="artist_stage"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Artist stage</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Main stage" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
