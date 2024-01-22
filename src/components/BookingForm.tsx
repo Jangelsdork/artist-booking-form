@@ -41,6 +41,7 @@ import {
 
 import { Switch } from "@/components/ui/switch"
 
+import { Textarea } from "@/components/ui/textarea"
 
 const dayjs = require('dayjs')
 
@@ -55,7 +56,7 @@ const formSchema = z.object({
   artist_name: z.string().min(2).max(50),
   type_performance: z.string().min(2).max(8),
   event_date: z.coerce.date().min(new Date(today), { message: "Date must be in the future" }),
-  alternative_dates: z.string().min(2).max(50).optional(),
+  alternative_dates: z.string().max(50).optional(),
   event_name: z.string().min(2).max(50),
   financial_offer: z.number(),
   currency: z.string().min(3).max(3),
@@ -64,7 +65,7 @@ const formSchema = z.object({
   role: z.string().min(2).max(50),
   venue_name: z.string().min(2).max(50),
   venue_street: z.string().min(2).max(50),
-  venue_number: z.string().min(2).max(10),
+  venue_number: z.string().min(1).max(10),
   venue_city: z.string().min(2).max(50),
   venue_country: z.string().min(2).max(50),
   venue_capacity: z.number().lt(100000).positive(),
@@ -72,8 +73,8 @@ const formSchema = z.object({
   venue_website: z.string().url({ message: "Invalid url" }),
   sound_system: z.string().min(2).max(100),
   stage_or_booth: z.string().min(2).max(10),
-  ticket_price_adv: z.string().min(2).max(15),
-  ticket_price_dos: z.string().min(2).max(15),
+  ticket_price_adv: z.number().lt(100000).positive(),
+  ticket_price_dos: z.number().lt(100000).positive(),
   billing: z.string().min(2).max(100),
   announcement: z.coerce.date().min(new Date(today), { message: "Date must be in the future" }),
   other_artists: z.string().min(2).max(500),
@@ -86,11 +87,11 @@ const formSchema = z.object({
   doors_close: z.string().min(2).max(50),
   company_name: z.string().min(2).max(50),
   company_street: z.string().min(2).max(50),
-  company_number: z.string().min(2).max(10),
+  company_number: z.string().min(1).max(10),
   company_city: z.string().min(2).max(50),
   company_country: z.string().min(2).max(50),
   vat: z.boolean(),
-  company_vat: z.string().min(2).max(20).optional(),
+  company_vat: z.string().max(20).optional(),
   signatory_first: z.string().min(2).max(50),
   signatory_last: z.string().min(2).max(50),
   signatory_email: z.string().email({ message: "Please enter a valid email address." }),
@@ -104,9 +105,9 @@ const formSchema = z.object({
   airport: z.string().min(2).max(50),
   time_to_hotel: z.string().min(2).max(50),
   time_to_venue: z.string().min(2).max(50),
-  visa: z.string().min(2).max(50),
-  health: z.string().min(2).max(50),
-  additional: z.string().max(500),
+  visa: z.boolean(),
+  health: z.boolean(),
+  additional: z.string().max(1000).optional(),
 })
 
 
@@ -114,6 +115,7 @@ const formSchema = z.object({
 export function BookingForm() {
 
   const [date, setDate] = useState<Date>()
+  const [dateAnnounce, setDateAnnounce] = useState<Date>()
 
   function WhtInput(form: any){
     return (
@@ -184,8 +186,8 @@ const form = useForm<z.infer<typeof formSchema>>({
       venue_website: "",
       sound_system: "",
       stage_or_booth: "",
-      ticket_price_adv: "",
-      ticket_price_dos: "",
+      ticket_price_adv: 0,
+      ticket_price_dos: 0,
       billing: "",
       announcement: today,
       other_artists: "",
@@ -216,14 +218,13 @@ const form = useForm<z.infer<typeof formSchema>>({
       airport: "",
       time_to_hotel: "",
       time_to_venue: "",
-      visa: "",
-      health: "",
+      visa: false,
+      health: false,
       additional: "",
     },
   })
 
-  console.log(form.control._formValues.first_name)  
-  console.log(form.control._formValues.wht)  
+
   
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
@@ -599,7 +600,11 @@ const form = useForm<z.infer<typeof formSchema>>({
                 <FormItem>
                   <FormLabel>Capacity</FormLabel>
                   <FormControl>
-                    <Input placeholder="300" {...field} />
+                  <Input 
+                    type="number" 
+                    placeholder="300" 
+                    {...field}
+                    onChange={event => field.onChange(+event.target.value)} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -612,7 +617,11 @@ const form = useForm<z.infer<typeof formSchema>>({
                 <FormItem>
                   <FormLabel>VIP tables</FormLabel>
                   <FormControl>
-                    <Input placeholder="10" {...field} />
+                  <Input 
+                    type="number" 
+                    placeholder="10" 
+                    {...field}
+                    onChange={event => field.onChange(+event.target.value)} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -626,7 +635,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Venue website</FormLabel>
                     <FormControl>
-                      <Input placeholder="www.velvet-onion.co.uk" {...field} />
+                      <Input placeholder="http://www.velvet-onion.co.uk" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -749,8 +758,8 @@ const form = useForm<z.infer<typeof formSchema>>({
                         <PopoverContent className="w-auto p-0">
                           <Calendar
                             mode="single"
-                            selected={date}
-                            onSelect={setDate}
+                            selected={dateAnnounce}
+                            onSelect={setDateAnnounce}
                             initialFocus
                           />
                         </PopoverContent>
@@ -965,6 +974,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                 )}
               />
               <div>{form.control._formValues.vat ? <VatInput /> : ""}</div>
+
               <FormField
                 control={form.control}
                 name="signatory_first"
@@ -1049,10 +1059,167 @@ const form = useForm<z.infer<typeof formSchema>>({
                   </FormItem>
                 )}
               />
+            
+          
+          <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">Logistics</h2><div></div>
+          <FormField
+                control={form.control}
+                name="logistics_first"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Logistics contact first Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Vince" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      Your name or contact person for this booking
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="logistics_last"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Last Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Noir" {...field} />
+                    </FormControl>
+                    <FormDescription></FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="logistics_email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="kingofthemods@yahoo.co.uk"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="logistics_phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone number</FormLabel>
+                    <FormControl>
+                      <Input placeholder="+44 123 ... ... " {...field} />
+                    </FormControl>
 
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="airport"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Nearest airport</FormLabel>
+                    <FormControl>
+                      <Input placeholder="LHR, LCY..." {...field} />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="time_to_hotel"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Time from airport to hotel</FormLabel>
+                    <FormControl>
+                      <Input placeholder="20 mins" {...field} />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="time_to_venue"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Time from hotel to venue</FormLabel>
+                    <FormControl>
+                      <Input placeholder="20 mins" {...field} />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="visa"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col pt-2 pb-1" >
+                    <FormLabel className="pb-4">Is a visa required to enter and perform in the event country?</FormLabel>
+                    <FormControl>
+                    <Switch
+                      
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />                    
+                    </FormControl>
+                    <FormDescription>
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="health"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col pt-2 pb-1" >
+                    <FormLabel className="pb-4">Are there any specific health requirements to enter the event country?</FormLabel>
+                    <FormControl>
+                    <Switch
+                      
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />                    
+                    </FormControl>
+                    <FormDescription>
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div></div>
               
               
           </div>
+          <FormField
+                control={form.control}
+                name="additional"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Any additional information. If you answered yes to the above visa & health questions, please add details below.</FormLabel>
+                    <FormControl>
+                      <Textarea placeholder="Go wild..." {...field} />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
           <Button type="submit">Submit</Button>
         </form>
       </Form>
