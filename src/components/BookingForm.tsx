@@ -89,7 +89,8 @@ const formSchema = z.object({
   company_number: z.string().min(2).max(10),
   company_city: z.string().min(2).max(50),
   company_country: z.string().min(2).max(50),
-  company_vat: z.string().min(2).max(20),
+  vat: z.boolean(),
+  company_vat: z.string().min(2).max(20).optional(),
   signatory_first: z.string().min(2).max(50),
   signatory_last: z.string().min(2).max(50),
   signatory_email: z.string().email({ message: "Please enter a valid email address." }),
@@ -138,6 +139,24 @@ export function BookingForm() {
     )
   } 
 
+  function VatInput(form: any){
+    return(
+      <FormField
+                control={form.control}
+                name="company_vat"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>VAT number</FormLabel>
+                    <FormControl>
+                      <Input placeholder="DE1234567" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+    )
+  }
+
 const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -182,6 +201,7 @@ const form = useForm<z.infer<typeof formSchema>>({
       company_number: "",
       company_city: "",
       company_country: "",
+      vat: false, 
       company_vat: "",
       signatory_first: "",
       signatory_last: "",
@@ -501,7 +521,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                 )}
               />
           </h2>
-          <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">Venue information
+          <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">Event details
           <div className="sm:grid sm:grid-cols-2 gap-x-8">
           <FormField
                 control={form.control}
@@ -660,7 +680,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                     <FormControl>
                     <Input 
                     type="number" 
-                    placeholder="10000" 
+                    placeholder="10" 
                     {...field}
                     onChange={event => field.onChange(+event.target.value)} />
 
@@ -767,8 +787,272 @@ const form = useForm<z.infer<typeof formSchema>>({
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="proposed_playtime"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Proposed playtime</FormLabel>
+                    <FormControl>
+                      <Input placeholder="19:00 - 21:00" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* change to text input */}
+              <FormField
+                control={form.control}
+                name="proposed_timetable"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Proposed timetable</FormLabel>
+                    <FormControl>
+                      <Input placeholder="David Guetta - 19:00 - 21:00, Tiesto - 21:00 - 23:00..." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="load_in"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Load in time</FormLabel>
+                    <FormControl>
+                      <Input placeholder="15:00" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* change to text input */}
+              <FormField
+                control={form.control}
+                name="soundcheck"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Proposed timetable</FormLabel>
+                    <FormControl>
+                      <Input placeholder="17:00-18:00" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="doors_open"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Doors open</FormLabel>
+                    <FormControl>
+                      <Input placeholder="19:00" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* change to text input */}
+              <FormField
+                control={form.control}
+                name="doors_close"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Doors Close</FormLabel>
+                    <FormControl>
+                      <Input placeholder="03:00" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
           </div>
           </h2>
+          <div className="flex flex-row gap-4 items-end">
+          <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">Company details </h2> <div className=" text-xs mb-1">As they will appear on the contract</div>
+         
+          </div>
+
+          <div className="sm:grid sm:grid-cols-2 gap-x-8">
+          <FormField
+                control={form.control}
+                name="company_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Company name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="The Velvet Onion PTY LTD" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="grid grid-cols-[1fr,0.4fr] gap-x-4">
+              <FormField
+                control={form.control}
+                name="company_street"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Street</FormLabel>
+                    <FormControl>
+                      <Input placeholder="First Street" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+              control={form.control}
+              name="company_number"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>House no.</FormLabel>
+                  <FormControl>
+                    <Input placeholder="100a" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+              </div>
+              <FormField
+                control={form.control}
+                name="company_city"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>City</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Dalston" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={form.control}
+                name="company_country"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Country</FormLabel>
+                    <FormControl>
+                      <Input placeholder="UK" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+               <FormField
+                control={form.control}
+                name="vat"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col pt-4 pb-1" >
+                    <FormLabel className="pb-4">Is the company part of the European economic area?</FormLabel>
+                    <FormControl>
+                    <Switch
+                      
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />                    
+                    </FormControl>
+                    <FormDescription>
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div>{form.control._formValues.vat ? <VatInput /> : ""}</div>
+              <FormField
+                control={form.control}
+                name="signatory_first"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Signatory First Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Vince" {...field} />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="signatory_last"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Signatory Last Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Noir" {...field} />
+                    </FormControl>
+                    <FormDescription></FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="signatory_email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Signatory Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="kingofthemods@yahoo.co.uk"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="signatory_phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Signatory Phone number</FormLabel>
+                    <FormControl>
+                      <Input placeholder="+44 123 ... ... " {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="promoter_website"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Promoter website</FormLabel>
+                    <FormControl>
+                      <Input placeholder="www.great-promo.co.uk" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="previous_booked"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Previously booked acts</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Scooter, Underworld..." {...field} />
+                    </FormControl>
+                    <FormDescription></FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              
+              
+          </div>
           <Button type="submit">Submit</Button>
         </form>
       </Form>
