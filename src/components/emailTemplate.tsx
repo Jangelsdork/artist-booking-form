@@ -3,12 +3,13 @@ import * as React from 'react';
 
 interface EmailTemplateProps {
   firstName: string;
+  lastName: string;
 }
 
 export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
-  firstName,
+  firstName, lastName
 }) => (
   <div>
-    <h1>Welcome, {firstName}!</h1>
+    <h1>Welcome, {firstName}{" "}{lastName}!</h1>
   </div>
 );
