@@ -1,4 +1,6 @@
+/* eslint-disable import/extensions */
 /* eslint-disable no-underscore-dangle */
+
 'use client'
 
 import * as z from "zod"

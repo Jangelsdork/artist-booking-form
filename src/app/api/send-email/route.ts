@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/prefer-default-export */
-import { EmailTemplate } from '../../../components/EmailTemplate';
+import { EmailTemplate } from '../../../components/emailTemplate';
 
 const { Resend } = require('resend');
 

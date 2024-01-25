@@ -1,9 +1,10 @@
+/* eslint-disable import/extensions */
+
 'use client'
 
 import { BookingForm } from '@/components/BookingForm'
 import { ModeToggle } from '@/components/mode-toggle'
-import Image from 'next/image'
-import { Form } from 'react-hook-form'
+
 
 export default function Home() {
   return (

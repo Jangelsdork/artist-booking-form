@@ -1,3 +1,6 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/prefer-default-export */
+
 "use client"
  
 import * as React from "react"
