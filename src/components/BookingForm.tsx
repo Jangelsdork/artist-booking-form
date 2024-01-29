@@ -50,7 +50,8 @@ const dayjs = require('dayjs')
 
 const today:Date = dayjs().format("YYYY-MM-DD")
 
-const formSchema = z.object({
+
+export const formSchema = z.object({
   first_name: z.string().min(2).max(50),
   last_name: z.string().min(2).max(50),
   email: z.string().email({ message: "Please enter a valid email address." }),
@@ -111,6 +112,8 @@ const formSchema = z.object({
   health: z.boolean(),
   additional: z.string().max(1000).optional(),
 })
+
+export type Schema = z.infer<typeof formSchema>
 
 
 // eslint-disable-next-line import/prefer-default-export
@@ -228,8 +231,25 @@ const form = useForm<z.infer<typeof formSchema>>({
 
 
   
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try{
+      const res: Response = await fetch ("/api/send-email",
+      {
+        method: "POST",
+        mode: "cors",
+        body: JSON.stringify(values),
+        headers: {
+          "content-type": "application/json"
+        },
+      })
+      const data = await res.json();
+      if(data){
+        console.log(data)
+      }
+    }
+    catch (error){
+      console.log(error)
+    }
   }
 
   return (
@@ -426,7 +446,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                 name="event_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Performance type</FormLabel>
+                    <FormLabel>Event Name</FormLabel>
                     <FormControl>
                     <Input placeholder="The Pie Face Showcase" {...field} />
                     </FormControl>
