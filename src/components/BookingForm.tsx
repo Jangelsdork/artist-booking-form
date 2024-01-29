@@ -766,12 +766,12 @@ const form = useForm<z.infer<typeof formSchema>>({
                             variant={"outline"}
                             className={cn(
                               "w-[280px] justify-start text-left font-normal",
-                              !date && "text-muted-foreground"
+                              !dateAnnounce && "text-muted-foreground"
                             )}
                           >
                             <CalendarIcon className="mr-2 h-4 w-4" />
-                            {date ? (
-                              format(date, "PPP")
+                            {dateAnnounce ? (
+                              format(dateAnnounce, "PPP")
                             ) : (
                               <span>Select date</span>
                             )}
@@ -864,7 +864,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                 name="soundcheck"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Proposed timetable</FormLabel>
+                    <FormLabel>Soundcheck time</FormLabel>
                     <FormControl>
                       <Input placeholder="17:00-18:00" {...field} />
                     </FormControl>
