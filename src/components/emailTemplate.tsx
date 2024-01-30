@@ -13,15 +13,15 @@ export const EmailTemplate: React.FC<Readonly<Schema>> = ({
     <h2><b>Promoter details</b></h2>
     <div><b>Name</b> {formData.first_name}{" "}{formData.last_name}</div>
     <div><b>Role:</b> {formData.role}</div> 
-    <div><b>Email:</b>{formData.email} </div>
-    <div><b>Phone:</b> {formData.phone}</div>
+    <div><b>Email: </b>{formData.email} </div>
+    <div><b>Phone: </b> {formData.phone}</div>
     <h2><b>Booking details</b></h2>
     <div><b>Artist: </b>{formData.artist_name} </div>
-    <div><b>Performance type:</b> {formData.type_performance}</div>
+    <div><b>Performance type: </b> {formData.type_performance}</div>
     <div><b>Event date: </b>{formData.event_date.toString()} </div>
-    <div><b>Alternative dates:</b> {formData.alternative_dates ? formData.alternative_dates : "None proposed"} </div>
+    <div><b>Alternative dates: </b> {formData.alternative_dates ? formData.alternative_dates : "None proposed"} </div>
     <div><b>Event Name: </b>{formData.event_name} </div>
-    <div><b>Offer amount:</b>{formData.financial_offer} {formData.currency}<b>WHT percentage:</b> {formData.wht ? formData.wht_amount : "Not applicable"}</div>
+    <div><b>Offer amount: </b>{formData.financial_offer} {formData.currency}<b>    WHT percentage:</b> {formData.wht ? formData.wht_amount : "Not applicable"}</div>
     <h2><b>Event Details</b></h2>
     
     <div><b>Venue: </b>{formData.venue_name} </div> 
@@ -38,10 +38,10 @@ export const EmailTemplate: React.FC<Readonly<Schema>> = ({
     <div><b>Other artist: </b> {formData.other_artists} </div>
     <div><b>Proposed stage: </b> {formData.artist_stage}</div>
     <div><b>Proposed playtime:</b>{formData.proposed_playtime}</div>
-    <div><b>Proposed Timetable:</b>{formData.proposed_timetable}</div>
-    <div><b>Load-in time:</b> {formData.load_in}</div>
-    <div><b>Soundcheck time:</b>{formData.soundcheck}</div>
-    <div><b>Doors:</b>{formData.doors_open} till {formData.doors_close}</div>
+    <div><b>Proposed Timetable: </b>{formData.proposed_timetable}</div>
+    <div><b>Load-in time: </b> {formData.load_in}</div>
+    <div><b>Soundcheck time: </b>{formData.soundcheck}</div>
+    <div><b>Doors: </b>{formData.doors_open} till {formData.doors_close}</div>
     <h2>Contract Details</h2>
     <div><b>Company Name: </b>{formData.company_name}</div>
     <div>{formData.company_street} {formData.company_number},</div>
@@ -51,7 +51,7 @@ export const EmailTemplate: React.FC<Readonly<Schema>> = ({
     <div><b>Email: </b> {formData.signatory_email}</div>    
     <div><b>Phone: </b> {formData.signatory_phone}</div>
     <div><b>Promoter website: </b> {formData.promoter_website}</div>
-    <div><b>Previously booked acts:</b> {formData.previous_booked}</div>
+    <div><b>Previously booked acts: </b> {formData.previous_booked}</div>
     <h2>Logistics</h2>
     <div><b>Logistics contact: </b>{formData.logistics_first} {formData.logistics_last}</div>
     <div><b>Email: </b> {formData.logistics_email}</div>

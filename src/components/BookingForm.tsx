@@ -44,6 +44,7 @@ import {
 import { Switch } from "@/components/ui/switch"
 
 import { Textarea } from "@/components/ui/textarea"
+import HandleRider from "./HandleRider"
 
 const dayjs = require('dayjs')
 
@@ -384,6 +385,10 @@ const form = useForm<z.infer<typeof formSchema>>({
                   </FormItem>
                 )}
               />
+              
+              <HandleRider chosenArtist={form.control._formValues.artist_name} />
+              
+              <div></div>
               <FormField
                 control={form.control}
                 name="event_date"
