@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 type Props = {
-    chosenArtist: string
+    chosenArtist: string | undefined | HTMLInputElement
 }
 
 const HandleRider = ({chosenArtist}: Props) => {

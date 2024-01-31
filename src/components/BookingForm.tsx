@@ -122,6 +122,7 @@ export function BookingForm() {
 
   const [date, setDate] = useState<Date>()
   const [dateAnnounce, setDateAnnounce] = useState<Date>()
+  const [chosenArtist, setChosenArtist] = useState<string>()
 
   function WhtInput(form: any){
     return (
@@ -345,7 +346,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                         <SelectTrigger className="w-[180px]">
                           <SelectValue placeholder="Select an artist..." />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent onChange={setChosenArtist(form.control._formValues.artist_name)}>
                           <SelectItem value="satori">Satori</SelectItem>
                           <SelectItem value="sabo">Sabo</SelectItem>
                           <SelectItem value="oceanvs">
@@ -386,7 +387,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                 )}
               />
               
-              <HandleRider chosenArtist={form.control._formValues.artist_name} />
+              <HandleRider chosenArtist={chosenArtist} />
               
               <div></div>
               <FormField
