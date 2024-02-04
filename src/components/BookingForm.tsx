@@ -57,7 +57,7 @@ export const formSchema = z.object({
   last_name: z.string().min(2).max(50),
   email: z.string().email({ message: "Please enter a valid email address." }),
   phone: z.string().min(8).max(15),
-  artist_name: z.string().min(2).max(50),
+  artist_name: z.string().min(2, {message:"You must select the artist you wish to book"}).max(50),
   type_performance: z.string().min(2).max(8),
   event_date: z.coerce.date().min(new Date(today), { message: "Date must be in the future" }),
   alternative_dates: z.string().max(50).optional(),
@@ -73,8 +73,8 @@ export const formSchema = z.object({
   venue_city: z.string().min(2).max(50),
   venue_country: z.string().min(2).max(50),
   venue_capacity: z.number().lt(100000).positive(),
-  vip_tables: z.number().lt(1000).positive(),
-  venue_website: z.string().url({ message: "Invalid url" }),
+  vip_tables: z.number().lt(1000).optional(),
+  venue_website: z.string().min(2).max(100),
   sound_system: z.string().min(2).max(100),
   stage_or_booth: z.string().min(2).max(10),
   ticket_price_adv: z.number().lt(100000).positive(),
@@ -89,6 +89,7 @@ export const formSchema = z.object({
   soundcheck: z.string().min(2).max(50),
   doors_open: z.string().min(2).max(50),
   doors_close: z.string().min(2).max(50),
+  prev_booker: z.boolean(),
   company_name: z.string().min(2).max(50),
   company_street: z.string().min(2).max(50),
   company_number: z.string().min(1).max(10),
@@ -100,7 +101,7 @@ export const formSchema = z.object({
   signatory_last: z.string().min(2).max(50),
   signatory_email: z.string().email({ message: "Please enter a valid email address." }),
   signatory_phone: z.string().min(8).max(15),
-  promoter_website: z.string().url({ message: "Invalid url" }),
+  promoter_website: z.string().min(2).max(100),
   previous_booked: z.string().min(2).max(100),
   logistics_first: z.string().min(2).max(50),
   logistics_last: z.string().min(2).max(50),
@@ -179,7 +180,7 @@ const form = useForm<z.infer<typeof formSchema>>({
       event_name: "",
       financial_offer: 100,
       currency: "EUR",
-      wht: false,
+      wht: true,
       wht_amount: 0,
       role: "",
       venue_name: "",
@@ -204,12 +205,13 @@ const form = useForm<z.infer<typeof formSchema>>({
       soundcheck: "",
       doors_open: "",
       doors_close: "",
+      prev_booker: false,
       company_name: "",
       company_street: "",
       company_number: "",
       company_city: "",
       company_country: "",
-      vat: false, 
+      vat: true, 
       company_vat: "",
       signatory_first: "",
       signatory_last: "",
@@ -907,11 +909,31 @@ const form = useForm<z.infer<typeof formSchema>>({
           </div>
           </h2>
           <div className="flex flex-row gap-4 items-end">
-          <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">Company details </h2> <div className=" text-xs mb-1">As they will appear on the contract</div>
+          <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">Company details </h2> 
          
           </div>
-
+          <div className="text-xs max-w-[60vw]">Please input below the company details that will appear on the contract. If you have previously made a booking with us and the company details have not changed, please tick the box below and you can skip this section. We reserve the right to charge additional fees should the paperwork need to be changed at a later date due to negligence on the part of the booker. </div>
+          <FormField
+                control={form.control}
+                name="prev_booker"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col pt-4 pb-1" >
+                    <FormLabel className="pb-4">I have booked an artist previously with We are E and the details remain the same</FormLabel>
+                    <FormControl>
+                    <Switch
+                      
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />                    
+                    </FormControl>
+                    <FormDescription>
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
           <div className="sm:grid sm:grid-cols-2 gap-x-8">
+  
           <FormField
                 control={form.control}
                 name="company_name"
