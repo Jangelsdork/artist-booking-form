@@ -942,7 +942,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Company name</FormLabel>
                     <FormControl>
-                      <Input placeholder="The Velvet Onion PTY LTD" {...field} />
+                      <Input placeholder="The Velvet Onion PTY LTD" {...field}  />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
