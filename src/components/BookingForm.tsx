@@ -91,18 +91,18 @@ export const formSchema = z.object({
   doors_close: z.string().min(2).max(50),
   prev_booker: z.boolean(),
   company_name: z.string().min(2).max(50),
-  company_street: z.string().min(2).max(50),
-  company_number: z.string().min(1).max(10),
-  company_city: z.string().min(2).max(50),
-  company_country: z.string().min(2).max(50),
-  vat: z.boolean(),
-  company_vat: z.string().max(20).optional(),
-  signatory_first: z.string().min(2).max(50),
-  signatory_last: z.string().min(2).max(50),
-  signatory_email: z.string().email({ message: "Please enter a valid email address." }),
-  signatory_phone: z.string().min(8).max(15),
-  promoter_website: z.string().min(2).max(100),
-  previous_booked: z.string().min(2).max(100),
+  company_street: z.string().min(2).max(50).or(z.literal('')),
+  company_number: z.string().min(1).max(10).or(z.literal('')),
+  company_city: z.string().min(2).max(50).or(z.literal('')),
+  company_country: z.string().min(2).max(50).or(z.literal('')),
+  vat: z.boolean().optional(),
+  company_vat: z.string().min(6).max(20).or(z.literal('')),
+  signatory_first: z.string().min(2).max(50).or(z.literal('')),
+  signatory_last: z.string().min(2).max(50).or(z.literal('')),
+  signatory_email: z.string().email({ message: "Please enter a valid email address." }).optional().or(z.literal('')),
+  signatory_phone: z.string().min(8).max(15).or(z.literal('')),
+  promoter_website: z.string().min(2).max(100).or(z.literal('')),
+  previous_booked: z.string().min(2).max(100).or(z.literal('')),
   logistics_first: z.string().min(2).max(50),
   logistics_last: z.string().min(2).max(50),
   logistics_email: z.string().email({ message: "Please enter a valid email address." }),
@@ -270,7 +270,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>First Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Vince" {...field} />
+                      <Input placeholder="Vince"  {...field} />
                     </FormControl>
                     <FormDescription>
                       Your name or contact person for this booking
@@ -919,7 +919,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                 name="prev_booker"
                 render={({ field }) => (
                   <FormItem className="flex flex-col pt-4 pb-1" >
-                    <FormLabel className="pb-4">I have booked an artist previously with We are E and the details remain the same</FormLabel>
+                    <FormLabel className="pb-4">I have booked an artist previously with We are E and the contract details remain the same</FormLabel>
                     <FormControl>
                     <Switch
                       
@@ -933,8 +933,8 @@ const form = useForm<z.infer<typeof formSchema>>({
                   </FormItem>
                 )}
               />
-          <div className="sm:grid sm:grid-cols-2 gap-x-8">
-  
+          
+          {!form.control._formValues.prev_booker?(<div className="sm:grid sm:grid-cols-2 gap-x-8">
           <FormField
                 control={form.control}
                 name="company_name"
@@ -942,7 +942,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Company name</FormLabel>
                     <FormControl>
-                      <Input placeholder="The Velvet Onion PTY LTD" {...field}  />
+                      <Input placeholder="The Velvet Onion PTY LTD" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1109,8 +1109,26 @@ const form = useForm<z.infer<typeof formSchema>>({
                   </FormItem>
                 )}
               />
-            
+            </div>
+            )
+            : 
+            <FormField
+                control={form.control}
+                name="company_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Company name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="The Velvet Onion PTY LTD" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            }
           
+          
+            <div className="sm:grid sm:grid-cols-2 gap-x-8">
           <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">Logistics</h2><div></div>
           <FormField
                 control={form.control}
