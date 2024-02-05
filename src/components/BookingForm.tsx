@@ -3,6 +3,7 @@
 
 'use client'
 
+
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -234,6 +235,7 @@ const form = useForm<z.infer<typeof formSchema>>({
   })
 
 
+
   
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try{
@@ -342,14 +344,17 @@ const form = useForm<z.infer<typeof formSchema>>({
                     <FormLabel>Artist</FormLabel>
                     <FormControl>
                       <Select
+                      // (value)=>setChosenArtist(value)
                         onValueChange={field.onChange}
                         defaultValue={field.value}
+
+                        
                       >
                         <SelectTrigger className="w-[180px]">
                           <SelectValue placeholder="Select an artist..." />
                         </SelectTrigger>
-                        <SelectContent onChange={setChosenArtist(form.control._formValues.artist_name)}>
-                          <SelectItem value="satori">Satori</SelectItem>
+                        <SelectContent >
+                          <SelectItem value="satori" >Satori</SelectItem>
                           <SelectItem value="sabo">Sabo</SelectItem>
                           <SelectItem value="oceanvs">
                             Oceanvs Orientalis
@@ -389,7 +394,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                 )}
               />
               
-              <HandleRider chosenArtist={chosenArtist} />
+              <HandleRider chosenArtist={form.control._formValues.artist_name} />
               
               <div></div>
               <FormField
@@ -919,7 +924,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                 name="prev_booker"
                 render={({ field }) => (
                   <FormItem className="flex flex-col pt-4 pb-1" >
-                    <FormLabel className="pb-4">I have booked an artist previously with We are E and the contract details remain the same</FormLabel>
+                    <FormLabel className="pb-4">I have booked an artist previously with We are E and the contract details remain the same:</FormLabel>
                     <FormControl>
                     <Switch
                       
