@@ -124,7 +124,6 @@ export function BookingForm() {
 
   const [date, setDate] = useState<Date>()
   const [dateAnnounce, setDateAnnounce] = useState<Date>()
-  const [chosenArtist, setChosenArtist] = useState<string>()
 
   function WhtInput(form: any){
     return (
@@ -258,6 +257,7 @@ const form = useForm<z.infer<typeof formSchema>>({
     }
   }
 
+
   return (
     <div>
       <Form {...form}>
@@ -347,6 +347,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                       // (value)=>setChosenArtist(value)
                         onValueChange={field.onChange}
                         defaultValue={field.value}
+                        
 
                         
                       >
