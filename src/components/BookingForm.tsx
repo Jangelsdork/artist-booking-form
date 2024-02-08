@@ -74,7 +74,7 @@ export const formSchema = z.object({
   venue_city: z.string().min(2).max(50),
   venue_country: z.string().min(2).max(50),
   venue_capacity: z.number().lt(100000).positive(),
-  vip_tables: z.number().min(0).lt(1000).optional(),
+  vip_tables: z.number().min(0).lt(1000),
   venue_website: z.string().min(2).max(100),
   sound_system: z.string().min(2).max(100),
   stage_or_booth: z.string().min(2).max(10),
