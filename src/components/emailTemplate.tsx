@@ -56,7 +56,7 @@ export const EmailTemplate: React.FC<Readonly<Schema>> = ({
          <div><b>Previously booked acts: </b> {formData.previous_booked}</div>
       </div>
     )
-  : <div>Please note: the promoter has indicated they have made a previous booking with us using the above company.</div>
+  : <div><b>Please note: the promoter has indicated they have made a previous booking with us using the above company.</b></div>
   }
    
     <h2>Logistics</h2>
