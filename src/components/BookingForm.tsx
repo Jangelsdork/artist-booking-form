@@ -1310,7 +1310,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                 )}
               />
 
-              <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight" >Ts and Cs</h2>
+              <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight" >Terms and Conditions</h2>
               <div className="text-xs max-w-[60vw]">Submission of this booking request form does not constitue a confirmation or a contract. The promoter is not permitted to announce an event before contracts are signed, a deposit has been received by We are E, an announcement date has been agreed, and all billing and artwork has been approved.</div>
               <div className="scroll-m-20 text-xl font-semibold tracking-tight" >Our expectations:</div>
               <ul className={"list-disc list-inside text-xs max-w-[60vw]"}>
