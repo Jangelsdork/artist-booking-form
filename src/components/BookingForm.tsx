@@ -7,6 +7,8 @@
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+
 
 import { useState } from "react"
 
@@ -128,6 +130,9 @@ export function BookingForm() {
 
   const [date, setDate] = useState<Date>()
   const [dateAnnounce, setDateAnnounce] = useState<Date>()
+  const [submitClicked, setSubmitClicked] = useState<boolean>(false)
+  const [submissionError, setSubmissionError] = useState<boolean>(false)
+  const [submissionSuccess, setSubmissionSuccess] = useState<boolean>(false)
 
   function WhtInput(form: any){
     return (
@@ -242,7 +247,7 @@ const form = useForm<z.infer<typeof formSchema>>({
 
   
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values)
+    setSubmitClicked(true)
     try{
       const res: Response = await fetch ("/api/send-email",
       {
@@ -256,10 +261,13 @@ const form = useForm<z.infer<typeof formSchema>>({
       const data = await res.json();
       if(data){
         console.log(data)
+        setSubmitClicked(false)
+        setSubmissionSuccess(true)
       }
     }
     catch (error){
       console.log(error)
+      setSubmissionError(true)
     }
   }
 
@@ -1337,7 +1345,17 @@ const form = useForm<z.infer<typeof formSchema>>({
             
           )}
         />
-          <Button type="submit">Submit</Button>
+        <div className="flex flex-row gap-6 items-center">
+          {submissionSuccess?<Button disabled type="submit">Submit</Button>:<Button type="submit">Submit</Button>
+        
+          }
+          
+          {submitClicked?<AiOutlineLoading3Quarters className="animate-spin h-5 w-5 mr-3 fill-white "  />:<div />}
+          {submissionError?<div>Sorry, there's been an issue with your booking request.</div>:<div />}
+          {submissionSuccess?<div>Thanks, we've received your booking request</div>:<div />}
+          
+          </div>
+
         </form>
       </Form>
     </div>
