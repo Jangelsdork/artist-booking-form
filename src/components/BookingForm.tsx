@@ -1351,8 +1351,8 @@ const form = useForm<z.infer<typeof formSchema>>({
           }
           
           {submitClicked?<AiOutlineLoading3Quarters className="animate-spin h-5 w-5 mr-3 fill-white "  />:<div />}
-          {submissionError?<div>Sorry, there's been an issue with your booking request.</div>:<div />}
-          {submissionSuccess?<div>Thanks, we've received your booking request</div>:<div />}
+          {submissionError?<div>Sorry, there has been an issue with your booking request.</div>:<div />}
+          {submissionSuccess?<div>Thanks, we have received your booking request</div>:<div />}
           
           </div>
 
