@@ -10,6 +10,9 @@ import { useForm } from "react-hook-form"
 
 import { useState } from "react"
 
+import { Checkbox } from "@/components/ui/checkbox"
+
+
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -66,7 +69,7 @@ export const formSchema = z.object({
   financial_offer: z.number(),
   currency: z.string().min(3).max(3),
   wht: z.boolean(),
-  wht_amount: z.number().lt(100).positive().optional(),
+  wht_amount: z.number().min(0).lt(100),
   role: z.string().min(2).max(50),
   venue_name: z.string().min(2).max(50),
   venue_street: z.string().min(2).max(50),
@@ -114,6 +117,7 @@ export const formSchema = z.object({
   visa: z.boolean(),
   health: z.boolean(),
   additional: z.string().max(1000).optional(),
+  termsConditions: z.literal<boolean>(true, { errorMap: () => ({ message: "You must agree to the terms and conditions to submit an offer", }), }),
 })
 
 export type Schema = z.infer<typeof formSchema>
@@ -230,6 +234,7 @@ const form = useForm<z.infer<typeof formSchema>>({
       visa: false,
       health: false,
       additional: "",
+      termsConditions: false,
     },
   })
 
@@ -237,6 +242,7 @@ const form = useForm<z.infer<typeof formSchema>>({
 
   
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log(values)
     try{
       const res: Response = await fetch ("/api/send-email",
       {
@@ -347,6 +353,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                       // (value)=>setChosenArtist(value)
                         onValueChange={field.onChange}
                         defaultValue={field.value}
+          
                         
 
                         
@@ -1294,6 +1301,42 @@ const form = useForm<z.infer<typeof formSchema>>({
                   </FormItem>
                 )}
               />
+
+              <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight" >Ts and Cs</h2>
+              <div className="text-xs max-w-[60vw]">Submission of this booking request form does not constitue a confirmation or a contract. The promoter is not permitted to announce an event before contracts are signed, a deposit has been received by We are E, an announcement date has been agreed, and all billing and artwork has been approved.</div>
+              <div className="scroll-m-20 text-xl font-semibold tracking-tight" >Our expectations:</div>
+              <ul className={"list-disc list-inside text-xs max-w-[60vw]"}>
+                <li>Contracts will be signed and returned to office@wearee.nl by the due date listed on the contract</li>                 
+                <li>All invoices will be paid to the bank account listed on the invoices by the due date</li>    
+                <li>Clear and professional communication while executing contact requirements, including administration of paperwork, advancing & logistics, marketing, and fulfilling rider requirements </li>
+                <li>Respectful treatment towards our artists, and complying strictly to the pre-agreed terms of the contract. This means no recording, interviews, etc. without written prior concent of We are E & artist management</li>   
+                <li>Confidentiality around all deal terms</li>      
+                <li>Should issues arise, they should be communicated with We are E immediately. We will work in good faith to help resolve issues where possible, but can only do so if communicated with us in good time.</li>    
+              </ul>
+              <div className="text-s max-w-[60vw]">By submitting this offer you acknowledge that you have the authority to do so. Once submitted and confirmed by We are E, this represents a binding offer.</div>
+              {/*to do: add Captcha*/}
+              <FormField
+          control={form.control}
+          name="termsConditions"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>
+                Accept terms and conditions                
+                </FormLabel>
+                <FormMessage className=" text-xs"/>
+              </div>
+              
+            </FormItem>
+            
+          )}
+        />
           <Button type="submit">Submit</Button>
         </form>
       </Form>

@@ -44,14 +44,21 @@ export const EmailTemplate: React.FC<Readonly<Schema>> = ({
     <div><b>Doors: </b>{formData.doors_open} till {formData.doors_close}</div>
     <h2>Contract Details</h2>
     <div><b>Company Name: </b>{formData.company_name}</div>
-    <div>{formData.company_street} {formData.company_number},</div>
-    <div>{formData.company_city} {formData.company_country}</div>
-    <div>{formData.vat ? formData.company_vat : "no VAT number given"}</div>
-    <div><b>Signatory: </b> {formData.signatory_first} {formData.signatory_last}</div>
-    <div><b>Email: </b> {formData.signatory_email}</div>    
-    <div><b>Phone: </b> {formData.signatory_phone}</div>
-    <div><b>Promoter website: </b> {formData.promoter_website}</div>
-    <div><b>Previously booked acts: </b> {formData.previous_booked}</div>
+    {!formData.prev_booker? (
+      <div>
+         <div>{formData.company_street} {formData.company_number},</div>
+         <div>{formData.company_city} {formData.company_country}</div>
+         <div>{formData.vat ? formData.company_vat : "no VAT number given"}</div>
+         <div><b>Signatory: </b> {formData.signatory_first} {formData.signatory_last}</div>
+         <div><b>Email: </b> {formData.signatory_email}</div>    
+         <div><b>Phone: </b> {formData.signatory_phone}</div>
+         <div><b>Promoter website: </b> {formData.promoter_website}</div>
+         <div><b>Previously booked acts: </b> {formData.previous_booked}</div>
+      </div>
+    )
+  : <div>Please note: the promoter has indicated they have made a previous booking with us using the above company.</div>
+  }
+   
     <h2>Logistics</h2>
     <div><b>Logistics contact: </b>{formData.logistics_first} {formData.logistics_last}</div>
     <div><b>Email: </b> {formData.logistics_email}</div>
