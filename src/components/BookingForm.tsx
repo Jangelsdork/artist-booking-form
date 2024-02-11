@@ -1367,7 +1367,6 @@ const form = useForm<z.infer<typeof formSchema>>({
             sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
             ref={recaptchaRef}
             onChange={handleCaptchaSubmission}
-            theme={"dark"}
           />
         <div className="flex flex-row gap-6 items-center">
           {submissionSuccess?<Button disabled type="submit">Submit</Button>:<Button type="submit" disabled={!isVerified}>Submit</Button>
