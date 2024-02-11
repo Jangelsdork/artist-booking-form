@@ -4,7 +4,6 @@
 'use client'
 
 import ReCAPTCHA from "react-google-recaptcha"
-import { verifyCaptcha } from "../../ServerActions"
 import { useRef, useState } from "react"
 
 
@@ -54,6 +53,8 @@ import { Switch } from "@/components/ui/switch"
 
 import { Textarea } from "@/components/ui/textarea"
 import HandleRider from "./HandleRider"
+import { verifyCaptcha } from "../../ServerActions"
+
 
 const dayjs = require('dayjs')
 
@@ -1362,6 +1363,7 @@ const form = useForm<z.infer<typeof formSchema>>({
             sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
             ref={recaptchaRef}
             onChange={handleCaptchaSubmission}
+            data-theme={dark}
           />
         <div className="flex flex-row gap-6 items-center">
           {submissionSuccess?<Button disabled type="submit">Submit</Button>:<Button type="submit" disabled={!isVerified}>Submit</Button>
