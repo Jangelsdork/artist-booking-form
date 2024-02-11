@@ -3,14 +3,17 @@
 
 'use client'
 
+import ReCAPTCHA from "react-google-recaptcha"
+import { verifyCaptcha } from "../../ServerActions"
+import { useRef, useState } from "react"
+
+
 
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-
-import { useState } from "react"
 
 import { Checkbox } from "@/components/ui/checkbox"
 
@@ -243,7 +246,15 @@ const form = useForm<z.infer<typeof formSchema>>({
     },
   })
 
+  const recaptchaRef = useRef<ReCAPTCHA>(null)
+  const [isVerified, setIsverified] = useState<boolean>(false)
 
+  async function handleCaptchaSubmission(token: string | null) {
+    // Server function to verify captcha
+    await verifyCaptcha(token)
+      .then(() => setIsverified(true))
+      .catch(() => setIsverified(false))
+  }
 
   
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -1322,7 +1333,9 @@ const form = useForm<z.infer<typeof formSchema>>({
                 <li>Should issues arise, they should be communicated with We are E immediately. We will work in good faith to help resolve issues where possible, but can only do so if communicated with us in good time.</li>    
               </ul>
               <div className="text-s max-w-[60vw]">By submitting this offer you acknowledge that you have the authority to do so. Once submitted and confirmed by We are E, this represents a binding offer.</div>
-              {/*to do: add Captcha*/}
+             
+              { /* to do: add Captcha */ }
+
               <FormField
           control={form.control}
           name="termsConditions"
@@ -1345,8 +1358,13 @@ const form = useForm<z.infer<typeof formSchema>>({
             
           )}
         />
+        <ReCAPTCHA
+            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+            ref={recaptchaRef}
+            onChange={handleCaptchaSubmission}
+          />
         <div className="flex flex-row gap-6 items-center">
-          {submissionSuccess?<Button disabled type="submit">Submit</Button>:<Button type="submit">Submit</Button>
+          {submissionSuccess?<Button disabled type="submit">Submit</Button>:<Button type="submit" disabled={!isVerified}>Submit</Button>
         
           }
           
