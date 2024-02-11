@@ -6,6 +6,8 @@
 import ReCAPTCHA from "react-google-recaptcha"
 import { useRef, useState } from "react"
 
+  
+
 
 
 import * as z from "zod"
@@ -137,6 +139,7 @@ export function BookingForm() {
   const [submitClicked, setSubmitClicked] = useState<boolean>(false)
   const [submissionError, setSubmissionError] = useState<boolean>(false)
   const [submissionSuccess, setSubmissionSuccess] = useState<boolean>(false)
+
 
   function WhtInput(form: any){
     return (
@@ -283,6 +286,7 @@ const form = useForm<z.infer<typeof formSchema>>({
     }
   }
 
+  
 
   return (
     <div>
@@ -1363,7 +1367,7 @@ const form = useForm<z.infer<typeof formSchema>>({
             sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
             ref={recaptchaRef}
             onChange={handleCaptchaSubmission}
-            data-theme={dark}
+            theme={"dark"}
           />
         <div className="flex flex-row gap-6 items-center">
           {submissionSuccess?<Button disabled type="submit">Submit</Button>:<Button type="submit" disabled={!isVerified}>Submit</Button>
