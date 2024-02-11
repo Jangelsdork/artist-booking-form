@@ -290,6 +290,7 @@ const form = useForm<z.infer<typeof formSchema>>({
 
   return (
     <div>
+          <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
