@@ -388,11 +388,25 @@ const form = useForm<z.infer<typeof formSchema>>({
                           <SelectValue placeholder="Select an artist..." />
                         </SelectTrigger>
                         <SelectContent >
-                          <SelectItem value="satori" >Satori</SelectItem>
+                          <SelectItem value="anthony-middleton">Anthony Middleton</SelectItem>
+                          <SelectItem value="armen-miran">Armen Miran</SelectItem>
+                          <SelectItem value="atish">Atish</SelectItem>
+                          <SelectItem value="be-svendsen">Be Svendsen</SelectItem>
+                          <SelectItem value="britta-arnold">Britta Arnold</SelectItem>
+                          <SelectItem value="gidge">Gidge</SelectItem>
+                          <SelectItem value="glauco-di-mambro">Glauco Di Mambro</SelectItem>
+                          <SelectItem value="joep-mencke">Joep Mencke</SelectItem>
+                          <SelectItem value="jp-enfant">JP Enfant</SelectItem>
+                          <SelectItem value="miss-melera">Miss Melera</SelectItem>
+                          <SelectItem value="oceanvs">Oceanvs Orientalis</SelectItem>
+                          <SelectItem value="patrice-baumel">Patrice Bäumel</SelectItem>
                           <SelectItem value="sabo">Sabo</SelectItem>
-                          <SelectItem value="oceanvs">
-                            Oceanvs Orientalis
-                          </SelectItem>
+                          <SelectItem value="sainte-vie">Sainte Vie</SelectItem>
+                          <SelectItem value="satori" >Satori</SelectItem>
+                          <SelectItem value="sora">Sorä</SelectItem>
+                          <SelectItem value="unders">Unders</SelectItem>
+
+                        
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -428,9 +442,10 @@ const form = useForm<z.infer<typeof formSchema>>({
                 )}
               />
               
-              <HandleRider chosenArtist={form.control._formValues.artist_name} />
+              {/* <HandleRider chosenArtist={form.control._formValues.artist_name} />
               
-              <div></div>
+              <div></div> */}
+              
               <FormField
                 control={form.control}
                 name="event_date"
@@ -1156,7 +1171,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                 name="company_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Company name</FormLabel>
+                    <FormLabel>Company name from previous booking, that will be used again for this booking</FormLabel>
                     <FormControl>
                       <Input placeholder="The Velvet Onion PTY LTD" {...field} />
                     </FormControl>
