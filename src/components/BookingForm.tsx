@@ -76,6 +76,10 @@ export const formSchema = z.object({
   event_name: z.string().min(2).max(50),
   financial_offer: z.number(),
   currency: z.string().min(3).max(3),
+  plus_bf: z.boolean(),
+  plus_flights: z.boolean(),
+  plus_hotel: z.boolean(),
+  plus_local: z.boolean(),
   wht: z.boolean(),
   wht_amount: z.number().min(0).lt(100),
   role: z.string().min(2).max(50),
@@ -197,6 +201,10 @@ const form = useForm<z.infer<typeof formSchema>>({
       event_name: "",
       financial_offer: 100,
       currency: "EUR",
+      plus_bf: true,
+      plus_flights: true,
+      plus_hotel: true,
+      plus_local: true,
       wht: true,
       wht_amount: 0,
       role: "",
@@ -567,6 +575,102 @@ const form = useForm<z.infer<typeof formSchema>>({
               />
 
               </div>
+              <div className="flex flex-row justify-between mt-6">
+              <FormField
+          control={form.control}
+          name="plus_bf"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>
+                  Plus 15% booking fee? 
+                </FormLabel>
+                <FormDescription>
+                  
+                </FormDescription>
+              </div>
+            </FormItem>
+          )}
+        />
+              <FormField
+          control={form.control}
+          name="plus_flights"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>
+                  Plus flights? 
+                </FormLabel>
+                <FormDescription>
+                  
+                </FormDescription>
+              </div>
+            </FormItem>
+          )}
+        />
+
+              </div>
+              <div className="flex flex-row justify-between mt-6">
+              <FormField
+          control={form.control}
+          name="plus_local"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>
+                  Plus local costs? 
+                </FormLabel>
+                <FormDescription>
+                  
+                </FormDescription>
+              </div>
+            </FormItem>
+          )}
+        />
+              <FormField
+          control={form.control}
+          name="plus_hotel"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>
+                  Plus hotel? 
+                </FormLabel>
+                <FormDescription>
+                  
+                </FormDescription>
+              </div>
+            </FormItem>
+          )}
+        />
+
+              </div>
+
+
               <FormField
                 control={form.control}
                 name="wht"
