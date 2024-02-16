@@ -575,7 +575,7 @@ const form = useForm<z.infer<typeof formSchema>>({
               />
 
               </div>
-              <div className="flex flex-row justify-between mt-6">
+              <div className="flex flex-col sm:flex-row justify-around mt-6">
               <FormField
           control={form.control}
           name="plus_bf"
@@ -620,9 +620,9 @@ const form = useForm<z.infer<typeof formSchema>>({
             </FormItem>
           )}
         />
-
               </div>
-              <div className="flex flex-row justify-between mt-6">
+      
+              <div className="flex flex-col sm:flex-row justify-around mt-6">
               <FormField
           control={form.control}
           name="plus_local"
