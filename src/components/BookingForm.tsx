@@ -670,7 +670,7 @@ const form = useForm<z.infer<typeof formSchema>>({
 
               </div>
 
-              {form.control._formValues.plus_bf?<div className="text-xs pt-4 text-wrap max-w-[25vw] text-yellow-400">Note: deals with booking fee on top require a deposit of the full booking fee, plus 25% of the artist fee to confirm. Deposit amount: {form.control._formValues.financial_offer *.35 + " " + form.control._formValues.currency} </div>:<div className="text-xs pt-4  text-yellow-400 ">Note: landed deals require a 50% deposit to confirm. Deposit amount: {form.control._formValues.financial_offer *.50 + " " + form.control._formValues.currency}</div>}
+              {form.control._formValues.plus_bf?<div className="text-xs pt-4 text-wrap max-w-[25vw] text-yellow-700">Note: deals with booking fee on top require a deposit of the full booking fee, plus 25% of the artist fee to confirm. Deposit amount based on the above inputs: {form.control._formValues.financial_offer *.35 + " " + form.control._formValues.currency} </div>:<div className="text-xs pt-4  text-yellow-700 ">Note: landed deals require a 50% deposit to confirm. Deposit amount: {form.control._formValues.financial_offer *.50 + " " + form.control._formValues.currency}</div>}
               <div /> 
 
 
