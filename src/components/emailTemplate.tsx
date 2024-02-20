@@ -22,6 +22,7 @@ export const EmailTemplate: React.FC<Readonly<Schema>> = ({
     <div><b>Alternative dates: </b> {formData.alternative_dates ? formData.alternative_dates : "None proposed"} </div>
     <div><b>Event Name: </b>{formData.event_name} </div>
     <div><b>Offer amount: </b>{formData.financial_offer} {formData.currency}<b>    WHT percentage:</b> {formData.wht ? formData.wht_amount : "Not applicable"}</div>
+    <div>Plus: {formData.plus_bf?<div>15% booking fee, </div>:<div></div>}{formData.plus_flights?<div>flights, </div>:<div></div>} {formData.plus_hotel?<div>hotel, </div>:<div></div>} {formData.plus_local?<div>Local costs</div>:<div></div>}</div>
     <h2><b>Event Details</b></h2>
     
     <div><b>Venue: </b>{formData.venue_name} </div> 
