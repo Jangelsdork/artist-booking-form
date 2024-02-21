@@ -636,24 +636,7 @@ const form = useForm<z.infer<typeof formSchema>>({
               </div>
 
               <div className="flex flex-col sm:flex-row justify-around mt-6">
-                <FormField
-                  control={form.control}
-                  name="plus_local"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>Plus local costs?</FormLabel>
-                        <FormDescription></FormDescription>
-                      </div>
-                    </FormItem>
-                  )}
-                />
+                
                 <FormField
                   control={form.control}
                   name="plus_hotel"
@@ -672,27 +655,11 @@ const form = useForm<z.infer<typeof formSchema>>({
                     </FormItem>
                   )}
                 />
+
+                <div className="text-sm flex items-end">All deals are plus grounds</div>
               </div>
 
-              {form.control._formValues.plus_bf ? (
-                <div className="text-xs pt-4 text-wrap max-w-[25vw] text-yellow-700">
-                  Note: deals with booking fee on top require a deposit of the
-                  full booking fee, plus 25% of the artist fee to confirm.
-                  Deposit amount based on the above inputs:{" "}
-                  {form.control._formValues.financial_offer * 0.35 +
-                    " " +
-                    form.control._formValues.currency}{" "}
-                </div>
-              ) : (
-                <div className="text-xs pt-4  text-yellow-700 ">
-                  Note: landed deals require a 50% deposit to confirm. Deposit
-                  amount:{" "}
-                  {form.control._formValues.financial_offer * 0.5 +
-                    " " +
-                    form.control._formValues.currency}
-                </div>
-              )}
-              <div />
+
 
               <FormField
                 control={form.control}
@@ -1519,6 +1486,25 @@ const form = useForm<z.infer<typeof formSchema>>({
             received by We are E, an announcement date has been agreed, and all
             billing and artwork has been approved.
           </div>
+          {form.control._formValues.plus_bf ? (
+                <div className="text-xs text-wrap text-orange-600">
+                  Note: deals with booking fee on top require a deposit of the
+                  full booking fee, plus 25% of the artist fee to confirm.
+                  Deposit amount based on the above inputs:{" "}
+                  {form.control._formValues.financial_offer * 0.35 +
+                    " " +
+                    form.control._formValues.currency}{" "}
+                </div>
+              ) : (
+                <div className="text-xs pt-4  text-yellow-700 ">
+                  Note: landed deals require a 50% deposit to confirm. Deposit
+                  amount:{" "}
+                  {form.control._formValues.financial_offer * 0.5 +
+                    " " +
+                    form.control._formValues.currency}
+                </div>
+              )}
+              <div />
           <div className="scroll-m-20 text-xl font-semibold tracking-tight">
             Our expectations:
           </div>
