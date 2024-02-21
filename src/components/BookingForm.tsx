@@ -261,12 +261,12 @@ const form = useForm<z.infer<typeof formSchema>>({
   const recaptchaRef = useRef<ReCAPTCHA>(null)
   const [isVerified, setIsverified] = useState<boolean>(false)
 
-  async function handleCaptchaSubmission(token: string | null) {
-    // Server function to verify captcha
-    await verifyCaptcha(token)
-      .then(() => setIsverified(true))
-      .catch(() => setIsverified(false))
-  }
+  // async function handleCaptchaSubmission(token: string | null) {
+  //   // Server function to verify captcha
+  //   await verifyCaptcha(token)
+  //     .then(() => setIsverified(true))
+  //     .catch(() => setIsverified(false))
+  // }
 
   
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -298,7 +298,11 @@ const form = useForm<z.infer<typeof formSchema>>({
 
   return (
     <div>
-          <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+      <script
+        src="https://www.google.com/recaptcha/api.js"
+        async
+        defer
+      ></script>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -312,7 +316,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>First Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Vince"  {...field} />
+                      <Input placeholder="Vince" {...field} />
                     </FormControl>
                     <FormDescription>
                       Your name or contact person for this booking
@@ -384,37 +388,49 @@ const form = useForm<z.infer<typeof formSchema>>({
                     <FormLabel>Artist</FormLabel>
                     <FormControl>
                       <Select
-                      // (value)=>setChosenArtist(value)
+                        // (value)=>setChosenArtist(value)
                         onValueChange={field.onChange}
                         defaultValue={field.value}
-          
-                        
-
-                        
                       >
                         <SelectTrigger className="w-[180px]">
                           <SelectValue placeholder="Select an artist..." />
                         </SelectTrigger>
-                        <SelectContent >
-                          <SelectItem value="anthony-middleton">Anthony Middleton</SelectItem>
-                          <SelectItem value="armen-miran">Armen Miran</SelectItem>
+                        <SelectContent>
+                          <SelectItem value="anthony-middleton">
+                            Anthony Middleton
+                          </SelectItem>
+                          <SelectItem value="armen-miran">
+                            Armen Miran
+                          </SelectItem>
                           <SelectItem value="atish">Atish</SelectItem>
-                          <SelectItem value="be-svendsen">Be Svendsen</SelectItem>
-                          <SelectItem value="britta-arnold">Britta Arnold</SelectItem>
+                          <SelectItem value="be-svendsen">
+                            Be Svendsen
+                          </SelectItem>
+                          <SelectItem value="britta-arnold">
+                            Britta Arnold
+                          </SelectItem>
                           <SelectItem value="gidge">Gidge</SelectItem>
-                          <SelectItem value="glauco-di-mambro">Glauco Di Mambro</SelectItem>
-                          <SelectItem value="joep-mencke">Joep Mencke</SelectItem>
+                          <SelectItem value="glauco-di-mambro">
+                            Glauco Di Mambro
+                          </SelectItem>
+                          <SelectItem value="joep-mencke">
+                            Joep Mencke
+                          </SelectItem>
                           <SelectItem value="jp-enfant">JP Enfant</SelectItem>
-                          <SelectItem value="miss-melera">Miss Melera</SelectItem>
-                          <SelectItem value="oceanvs">Oceanvs Orientalis</SelectItem>
-                          <SelectItem value="patrice-baumel">Patrice Bäumel</SelectItem>
+                          <SelectItem value="miss-melera">
+                            Miss Melera
+                          </SelectItem>
+                          <SelectItem value="oceanvs">
+                            Oceanvs Orientalis
+                          </SelectItem>
+                          <SelectItem value="patrice-baumel">
+                            Patrice Bäumel
+                          </SelectItem>
                           <SelectItem value="sabo">Sabo</SelectItem>
                           <SelectItem value="sainte-vie">Sainte Vie</SelectItem>
-                          <SelectItem value="satori" >Satori</SelectItem>
+                          <SelectItem value="satori">Satori</SelectItem>
                           <SelectItem value="sora">Sorä</SelectItem>
                           <SelectItem value="unders">Unders</SelectItem>
-
-                        
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -449,17 +465,19 @@ const form = useForm<z.infer<typeof formSchema>>({
                   </FormItem>
                 )}
               />
-              
+
               {/* <HandleRider chosenArtist={form.control._formValues.artist_name} />
               
               <div></div> */}
-              
+
               <FormField
                 control={form.control}
                 name="event_date"
                 render={() => (
                   <FormItem>
-                    <FormLabel className="flex flex-col pt-4 pb-1">Event Date</FormLabel>
+                    <FormLabel className="flex flex-col pt-4 pb-1">
+                      Event Date
+                    </FormLabel>
                     <FormControl>
                       <Popover>
                         <PopoverTrigger asChild>
@@ -500,7 +518,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Alternative dates if applicable</FormLabel>
                     <FormControl>
-                    <Input
+                      <Input
                         placeholder="dd.mm.yyyy, dd.mm.yyyy..."
                         {...field}
                       />
@@ -510,7 +528,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   </FormItem>
                 )}
               />
-            
+
               <FormField
                 control={form.control}
                 name="event_name"
@@ -518,7 +536,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Event Name</FormLabel>
                     <FormControl>
-                    <Input placeholder="The Pie Face Showcase" {...field} />
+                      <Input placeholder="The Pie Face Showcase" {...field} />
                     </FormControl>
 
                     <FormMessage />
@@ -526,196 +544,200 @@ const form = useForm<z.infer<typeof formSchema>>({
                 )}
               />
               <div className="flex flex-row gap-4">
-             <FormField
-                control={form.control}
-                name="financial_offer"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Offer amount</FormLabel>
-                    <FormControl>
-                    <Input 
-                    type="number" 
-                    placeholder="10000" 
-                    {...field}
-                    onChange={event => field.onChange(+event.target.value)} />
+                <FormField
+                  control={form.control}
+                  name="financial_offer"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Offer amount</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          placeholder="10000"
+                          {...field}
+                          onChange={(event) =>
+                            field.onChange(+event.target.value)
+                          }
+                        />
+                      </FormControl>
 
-                    </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="currency"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Currency</FormLabel>
+                      <FormControl>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="Select... " />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="EUR">EUR</SelectItem>
+                            <SelectItem value="USD">USD</SelectItem>
+                            <SelectItem value="AUD">AUD</SelectItem>
+                            <SelectItem value="GBP">GBP</SelectItem>
+                            <SelectItem value="CAD">CAD</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="currency"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Currency</FormLabel>
-                    <FormControl>
-                    <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <SelectTrigger className="w-[180px]">
-                          <SelectValue placeholder="Select... " />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="EUR">EUR</SelectItem>
-                          <SelectItem value="USD">USD</SelectItem>
-                          <SelectItem value="AUD">AUD</SelectItem>
-                          <SelectItem value="GBP">GBP</SelectItem>
-                          <SelectItem value="CAD">CAD</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
               <div className="flex flex-col sm:flex-row justify-around mt-6">
-              <FormField
-          control={form.control}
-          name="plus_bf"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
-              <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
+                <FormField
+                  control={form.control}
+                  name="plus_bf"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>Plus 15% booking fee?</FormLabel>
+                        <FormDescription></FormDescription>
+                      </div>
+                    </FormItem>
+                  )}
                 />
-              </FormControl>
-              <div className="space-y-1 leading-none">
-                <FormLabel>
-                  Plus 15% booking fee? 
-                </FormLabel>
-                <FormDescription>
-                  
-                </FormDescription>
-              </div>
-            </FormItem>
-          )}
-        />
-              <FormField
-          control={form.control}
-          name="plus_flights"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
-              <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
+                <FormField
+                  control={form.control}
+                  name="plus_flights"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>Plus flights?</FormLabel>
+                        <FormDescription></FormDescription>
+                      </div>
+                    </FormItem>
+                  )}
                 />
-              </FormControl>
-              <div className="space-y-1 leading-none">
-                <FormLabel>
-                  Plus flights? 
-                </FormLabel>
-                <FormDescription>
-                  
-                </FormDescription>
               </div>
-            </FormItem>
-          )}
-        />
-              </div>
-      
+
               <div className="flex flex-col sm:flex-row justify-around mt-6">
-              <FormField
-          control={form.control}
-          name="plus_local"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
-              <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
+                <FormField
+                  control={form.control}
+                  name="plus_local"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>Plus local costs?</FormLabel>
+                        <FormDescription></FormDescription>
+                      </div>
+                    </FormItem>
+                  )}
                 />
-              </FormControl>
-              <div className="space-y-1 leading-none">
-                <FormLabel>
-                  Plus local costs? 
-                </FormLabel>
-                <FormDescription>
-                  
-                </FormDescription>
-              </div>
-            </FormItem>
-          )}
-        />
-              <FormField
-          control={form.control}
-          name="plus_hotel"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
-              <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
+                <FormField
+                  control={form.control}
+                  name="plus_hotel"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>Plus hotel?</FormLabel>
+                        <FormDescription></FormDescription>
+                      </div>
+                    </FormItem>
+                  )}
                 />
-              </FormControl>
-              <div className="space-y-1 leading-none">
-                <FormLabel>
-                  Plus hotel? 
-                </FormLabel>
-                <FormDescription>
-                  
-                </FormDescription>
-              </div>
-            </FormItem>
-          )}
-        />
-
               </div>
 
-              {form.control._formValues.plus_bf?<div className="text-xs pt-4 text-wrap max-w-[25vw] text-yellow-700">Note: deals with booking fee on top require a deposit of the full booking fee, plus 25% of the artist fee to confirm. Deposit amount based on the above inputs: {form.control._formValues.financial_offer *.35 + " " + form.control._formValues.currency} </div>:<div className="text-xs pt-4  text-yellow-700 ">Note: landed deals require a 50% deposit to confirm. Deposit amount: {form.control._formValues.financial_offer *.50 + " " + form.control._formValues.currency}</div>}
-              <div /> 
-
+              {form.control._formValues.plus_bf ? (
+                <div className="text-xs pt-4 text-wrap max-w-[25vw] text-yellow-700">
+                  Note: deals with booking fee on top require a deposit of the
+                  full booking fee, plus 25% of the artist fee to confirm.
+                  Deposit amount based on the above inputs:{" "}
+                  {form.control._formValues.financial_offer * 0.35 +
+                    " " +
+                    form.control._formValues.currency}{" "}
+                </div>
+              ) : (
+                <div className="text-xs pt-4  text-yellow-700 ">
+                  Note: landed deals require a 50% deposit to confirm. Deposit
+                  amount:{" "}
+                  {form.control._formValues.financial_offer * 0.5 +
+                    " " +
+                    form.control._formValues.currency}
+                </div>
+              )}
+              <div />
 
               <FormField
                 control={form.control}
                 name="wht"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col pt-4 pb-1" >
-                    <FormLabel className="pb-4">Is Withholding tax applicable to this offer?</FormLabel>
+                  <FormItem className="flex flex-col pt-4 pb-1">
+                    <FormLabel className="pb-4">
+                      Is Withholding tax applicable to this offer?
+                    </FormLabel>
                     <FormControl>
-                    <Switch
-                      
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />                    
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
                     </FormControl>
-                    <FormDescription>
-                    </FormDescription>
+                    <FormDescription></FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              
+
               <div>{form.control._formValues.wht ? <WhtInput /> : ""}</div>
             </div>
             <FormField
-                control={form.control}
-                name="role"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Role</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Event promoter, club buyer, etc..." {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      Please clarify your role in regards to this booking
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Role</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Event promoter, club buyer, etc..."
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Please clarify your role in regards to this booking
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </h2>
-          <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">Event details
-          <div className="sm:grid sm:grid-cols-2 gap-x-8">
-          <FormField
+          <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+            Event details
+            <div className="sm:grid sm:grid-cols-2 gap-x-8">
+              <FormField
                 control={form.control}
                 name="venue_name"
                 render={({ field }) => (
@@ -729,33 +751,32 @@ const form = useForm<z.infer<typeof formSchema>>({
                 )}
               />
               <div className="grid grid-cols-[1fr,0.4fr] gap-x-4">
-              <FormField
-                control={form.control}
-                name="venue_street"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Street</FormLabel>
-                    <FormControl>
-                      <Input placeholder="First Street" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-              control={form.control}
-              name="venue_number"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>House no.</FormLabel>
-                  <FormControl>
-                    <Input placeholder="100a" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            
+                <FormField
+                  control={form.control}
+                  name="venue_street"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Street</FormLabel>
+                      <FormControl>
+                        <Input placeholder="First Street" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="venue_number"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>House no.</FormLabel>
+                      <FormControl>
+                        <Input placeholder="100a" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
               <FormField
                 control={form.control}
@@ -784,49 +805,58 @@ const form = useForm<z.infer<typeof formSchema>>({
                 )}
               />
               <div className="grid grid-cols-2 gap-x-4">
+                <FormField
+                  control={form.control}
+                  name="venue_capacity"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Capacity</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          placeholder="300"
+                          {...field}
+                          onChange={(event) =>
+                            field.onChange(+event.target.value)
+                          }
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="vip_tables"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>VIP tables</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          placeholder="10"
+                          {...field}
+                          onChange={(event) =>
+                            field.onChange(+event.target.value)
+                          }
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
               <FormField
-              control={form.control}
-              name="venue_capacity"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Capacity</FormLabel>
-                  <FormControl>
-                  <Input 
-                    type="number" 
-                    placeholder="300" 
-                    {...field}
-                    onChange={event => field.onChange(+event.target.value)} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="vip_tables"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>VIP tables</FormLabel>
-                  <FormControl>
-                  <Input 
-                    type="number" 
-                    placeholder="10" 
-                    {...field}
-                    onChange={event => field.onChange(+event.target.value)} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            </div>
-            <FormField
                 control={form.control}
                 name="venue_website"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Venue website</FormLabel>
                     <FormControl>
-                      <Input placeholder="http://www.velvet-onion.co.uk" {...field} />
+                      <Input
+                        placeholder="http://www.velvet-onion.co.uk"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -878,12 +908,14 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Ticket price in advance</FormLabel>
                     <FormControl>
-                    <Input 
-                    type="number" 
-                    placeholder="10" 
-                    {...field}
-                    onChange={event => field.onChange(+event.target.value)} />
-
+                      <Input
+                        type="number"
+                        placeholder="10"
+                        {...field}
+                        onChange={(event) =>
+                          field.onChange(+event.target.value)
+                        }
+                      />
                     </FormControl>
 
                     <FormMessage />
@@ -897,12 +929,14 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Ticket price @ door</FormLabel>
                     <FormControl>
-                    <Input 
-                    type="number" 
-                    placeholder="10" 
-                    {...field}
-                    onChange={event => field.onChange(+event.target.value)} />
-
+                      <Input
+                        type="number"
+                        placeholder="10"
+                        {...field}
+                        onChange={(event) =>
+                          field.onChange(+event.target.value)
+                        }
+                      />
                     </FormControl>
 
                     <FormMessage />
@@ -927,7 +961,9 @@ const form = useForm<z.infer<typeof formSchema>>({
                 name="announcement"
                 render={() => (
                   <FormItem>
-                    <FormLabel className="flex flex-col pt-4 pb-1">Announcement date</FormLabel>
+                    <FormLabel className="flex flex-col pt-4 pb-1">
+                      Announcement date
+                    </FormLabel>
                     <FormControl>
                       <Popover>
                         <PopoverTrigger asChild>
@@ -1008,7 +1044,10 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Proposed timetable</FormLabel>
                     <FormControl>
-                      <Input placeholder="David Guetta - 19:00 - 21:00, Tiesto - 21:00 - 23:00..." {...field} />
+                      <Input
+                        placeholder="David Guetta - 19:00 - 21:00, Tiesto - 21:00 - 23:00..."
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1068,75 +1107,87 @@ const form = useForm<z.infer<typeof formSchema>>({
                   </FormItem>
                 )}
               />
-          </div>
+            </div>
           </h2>
           <div className="flex flex-row gap-4 items-end">
-          <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">Company details </h2> 
-         
+            <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+              Company details{" "}
+            </h2>
           </div>
-          <div className="text-xs max-w-[60vw]">Please input below the company details that will appear on the contract. If you have previously made a booking with us and the company details have not changed, please tick the box below and you can skip this section. We reserve the right to charge additional fees should the paperwork need to be changed at a later date due to negligence on the part of the booker. </div>
+          <div className="text-xs max-w-[60vw]">
+            Please input below the company details that will appear on the
+            contract. If you have previously made a booking with us and the
+            company details have not changed, please tick the box below and you
+            can skip this section. We reserve the right to charge additional
+            fees should the paperwork need to be changed at a later date due to
+            negligence on the part of the booker.{" "}
+          </div>
           <FormField
-                control={form.control}
-                name="prev_booker"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col pt-4 pb-1" >
-                    <FormLabel className="pb-4">I have booked an artist previously with We are E and the contract details remain the same:</FormLabel>
-                    <FormControl>
-                    <Switch
-                      
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />                    
-                    </FormControl>
-                    <FormDescription>
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-          
-          {!form.control._formValues.prev_booker?(<div className="sm:grid sm:grid-cols-2 gap-x-8">
-          <FormField
+            control={form.control}
+            name="prev_booker"
+            render={({ field }) => (
+              <FormItem className="flex flex-col pt-4 pb-1">
+                <FormLabel className="pb-4">
+                  I have booked an artist previously with We are E and the
+                  contract details remain the same:
+                </FormLabel>
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <FormDescription></FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {!form.control._formValues.prev_booker ? (
+            <div className="sm:grid sm:grid-cols-2 gap-x-8">
+              <FormField
                 control={form.control}
                 name="company_name"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Company name</FormLabel>
                     <FormControl>
-                      <Input placeholder="The Velvet Onion PTY LTD" {...field} />
+                      <Input
+                        placeholder="The Velvet Onion PTY LTD"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <div className="grid grid-cols-[1fr,0.4fr] gap-x-4">
-              <FormField
-                control={form.control}
-                name="company_street"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Street</FormLabel>
-                    <FormControl>
-                      <Input placeholder="First Street" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-              control={form.control}
-              name="company_number"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>House no.</FormLabel>
-                  <FormControl>
-                    <Input placeholder="100a" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            
+                <FormField
+                  control={form.control}
+                  name="company_street"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Street</FormLabel>
+                      <FormControl>
+                        <Input placeholder="First Street" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="company_number"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>House no.</FormLabel>
+                      <FormControl>
+                        <Input placeholder="100a" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
               <FormField
                 control={form.control}
@@ -1151,7 +1202,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   </FormItem>
                 )}
               />
-              
+
               <FormField
                 control={form.control}
                 name="company_country"
@@ -1165,21 +1216,21 @@ const form = useForm<z.infer<typeof formSchema>>({
                   </FormItem>
                 )}
               />
-               <FormField
+              <FormField
                 control={form.control}
                 name="vat"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col pt-4 pb-1" >
-                    <FormLabel className="pb-4">Is the company part of the European economic area?</FormLabel>
+                  <FormItem className="flex flex-col pt-4 pb-1">
+                    <FormLabel className="pb-4">
+                      Is the company part of the European economic area?
+                    </FormLabel>
                     <FormControl>
-                    <Switch
-                      
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />                    
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
                     </FormControl>
-                    <FormDescription>
-                    </FormDescription>
+                    <FormDescription></FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -1271,238 +1322,290 @@ const form = useForm<z.infer<typeof formSchema>>({
                 )}
               />
             </div>
-            )
-            : 
+          ) : (
             <FormField
-                control={form.control}
-                name="company_name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Company name from previous booking, that will be used again for this booking</FormLabel>
-                    <FormControl>
-                      <Input placeholder="The Velvet Onion PTY LTD" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            }
-          
-          
-            <div className="sm:grid sm:grid-cols-2 gap-x-8">
-          <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">Logistics</h2><div></div>
-          <FormField
-                control={form.control}
-                name="logistics_first"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Logistics contact first Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Vince" {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      Your name or contact person for this booking
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="logistics_last"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Last Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Noir" {...field} />
-                    </FormControl>
-                    <FormDescription></FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="logistics_email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="kingofthemods@yahoo.co.uk"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="logistics_phone"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Phone number</FormLabel>
-                    <FormControl>
-                      <Input placeholder="+44 123 ... ... " {...field} />
-                    </FormControl>
+              control={form.control}
+              name="company_name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Company name from previous booking, that will be used again
+                    for this booking
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="The Velvet Onion PTY LTD" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="airport"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Nearest airport</FormLabel>
-                    <FormControl>
-                      <Input placeholder="LHR, LCY..." {...field} />
-                    </FormControl>
+          <div className="sm:grid sm:grid-cols-2 gap-x-8">
+            <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+              Logistics
+            </h2>
+            <div></div>
+            <FormField
+              control={form.control}
+              name="logistics_first"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Logistics contact first Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Vince" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    Your name or contact person for this booking
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="logistics_last"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Last Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Noir" {...field} />
+                  </FormControl>
+                  <FormDescription></FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="logistics_email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="kingofthemods@yahoo.co.uk" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="logistics_phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone number</FormLabel>
+                  <FormControl>
+                    <Input placeholder="+44 123 ... ... " {...field} />
+                  </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="time_to_hotel"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Time from airport to hotel</FormLabel>
-                    <FormControl>
-                      <Input placeholder="20 mins" {...field} />
-                    </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="airport"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Nearest airport</FormLabel>
+                  <FormControl>
+                    <Input placeholder="LHR, LCY..." {...field} />
+                  </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="time_to_venue"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Time from hotel to venue</FormLabel>
-                    <FormControl>
-                      <Input placeholder="20 mins" {...field} />
-                    </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="time_to_hotel"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Time from airport to hotel</FormLabel>
+                  <FormControl>
+                    <Input placeholder="20 mins" {...field} />
+                  </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="visa"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col pt-2 pb-1" >
-                    <FormLabel className="pb-4">Is a visa required to enter and perform in the event country?</FormLabel>
-                    <FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="time_to_venue"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Time from hotel to venue</FormLabel>
+                  <FormControl>
+                    <Input placeholder="20 mins" {...field} />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="visa"
+              render={({ field }) => (
+                <FormItem className="flex flex-col pt-2 pb-1">
+                  <FormLabel className="pb-4">
+                    Is a visa required to enter and perform in the event
+                    country?
+                  </FormLabel>
+                  <FormControl>
                     <Switch
-                      
                       checked={field.value}
                       onCheckedChange={field.onChange}
-                    />                    
-                    </FormControl>
-                    <FormDescription>
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="health"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col pt-2 pb-1" >
-                    <FormLabel className="pb-4">Are there any specific health requirements to enter the event country?</FormLabel>
-                    <FormControl>
+                    />
+                  </FormControl>
+                  <FormDescription></FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="health"
+              render={({ field }) => (
+                <FormItem className="flex flex-col pt-2 pb-1">
+                  <FormLabel className="pb-4">
+                    Are there any specific health requirements to enter the
+                    event country?
+                  </FormLabel>
+                  <FormControl>
                     <Switch
-                      
                       checked={field.value}
                       onCheckedChange={field.onChange}
-                    />                    
-                    </FormControl>
-                    <FormDescription>
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div></div>
-              
-              
+                    />
+                  </FormControl>
+                  <FormDescription></FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div></div>
           </div>
           <FormField
-                control={form.control}
-                name="additional"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Any additional information. If you answered yes to the above visa & health questions, please add details below.</FormLabel>
-                    <FormControl>
-                      <Textarea placeholder="Go wild..." {...field} />
-                    </FormControl>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight" >Terms and Conditions</h2>
-              <div className="text-xs max-w-[60vw]">Submission of this booking request form does not constitue a confirmation or a contract. The promoter is not permitted to announce an event before contracts are signed, a deposit has been received by We are E, an announcement date has been agreed, and all billing and artwork has been approved.</div>
-              <div className="scroll-m-20 text-xl font-semibold tracking-tight" >Our expectations:</div>
-              <ul className={"list-disc list-inside text-xs max-w-[60vw]"}>
-                <li>Contracts will be signed and returned to office@wearee.nl by the due date listed on the contract</li>                 
-                <li>All invoices will be paid to the bank account listed on the invoices by the due date</li>    
-                <li>Clear and professional communication while executing contact requirements, including administration of paperwork, advancing & logistics, marketing, and fulfilling rider requirements </li>
-                <li>Respectful treatment towards our artists, and complying strictly to the pre-agreed terms of the contract. This means no recording, interviews, etc. without written prior concent of We are E & artist management</li>   
-                <li>Confidentiality around all deal terms</li>      
-                <li>Should issues arise, they should be communicated with We are E immediately. We will work in good faith to help resolve issues where possible, but can only do so if communicated with us in good time.</li>    
-              </ul>
-              <div className="text-s max-w-[60vw]">By submitting this offer you acknowledge that you have the authority to do so. Once submitted and confirmed by We are E, this represents a binding offer.</div>
-             
-              { /* to do: add Captcha */ }
-
-              <FormField
-          control={form.control}
-          name="termsConditions"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
-              <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <div className="space-y-1 leading-none">
+            control={form.control}
+            name="additional"
+            render={({ field }) => (
+              <FormItem>
                 <FormLabel>
-                Accept terms and conditions                
+                  Any additional information. If you answered yes to the above
+                  visa & health questions, please add details below.
                 </FormLabel>
-                <FormMessage className=" text-xs"/>
-              </div>
-              
-            </FormItem>
-            
-          )}
-        />
-        <ReCAPTCHA
+                <FormControl>
+                  <Textarea placeholder="Go wild..." {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+            Terms and Conditions
+          </h2>
+          <div className="text-xs max-w-[60vw]">
+            Submission of this booking request form does not constitue a
+            confirmation or a contract. The promoter is not permitted to
+            announce an event before contracts are signed, a deposit has been
+            received by We are E, an announcement date has been agreed, and all
+            billing and artwork has been approved.
+          </div>
+          <div className="scroll-m-20 text-xl font-semibold tracking-tight">
+            Our expectations:
+          </div>
+          <ul className={"list-disc list-inside text-xs max-w-[60vw]"}>
+            <li>
+              Contracts will be signed and returned to office@wearee.nl by the
+              due date listed on the contract
+            </li>
+            <li>
+              All invoices will be paid to the bank account listed on the
+              invoices by the due date
+            </li>
+            <li>
+              Clear and professional communication while executing contact
+              requirements, including administration of paperwork, advancing &
+              logistics, marketing, and fulfilling rider requirements{" "}
+            </li>
+            <li>
+              Respectful treatment towards our artists, and complying strictly
+              to the pre-agreed terms of the contract. This means no recording,
+              interviews, etc. without written prior concent of We are E &
+              artist management
+            </li>
+            <li>Confidentiality around all deal terms</li>
+            <li>
+              Should issues arise, they should be communicated with We are E
+              immediately. We will work in good faith to help resolve issues
+              where possible, but can only do so if communicated with us in good
+              time.
+            </li>
+          </ul>
+          <div className="text-s max-w-[60vw]">
+            By submitting this offer you acknowledge that you have the authority
+            to do so. Once submitted and confirmed by We are E, this represents
+            a binding offer.
+          </div>
+
+          {/* to do: add Captcha */}
+
+          <FormField
+            control={form.control}
+            name="termsConditions"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel>Accept terms and conditions</FormLabel>
+                  <FormMessage className=" text-xs" />
+                </div>
+              </FormItem>
+            )}
+          />
+       {/* <ReCAPTCHA
             sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
             ref={recaptchaRef}
             onChange={handleCaptchaSubmission}
-          />
-        <div className="flex flex-row gap-6 items-center">
-          {submissionSuccess?<Button disabled type="submit">Submit</Button>:<Button type="submit" disabled={!isVerified}>Submit</Button>
-        
-          }
-          
-          {submitClicked?<AiOutlineLoading3Quarters className="animate-spin h-5 w-5 mr-3 fill-white "  />:<div />}
-          {submissionError?<div>Sorry, there has been an issue with your booking request.</div>:<div />}
-          {submissionSuccess?<div>Thanks, we have received your booking request</div>:<div />}
-          
-          </div>
+          />  */}
+          <div className="flex flex-row gap-6 items-center">
+            {submissionSuccess ? (
+              <Button disabled type="submit">
+                Submit
+              </Button>
+            ) : (
+              <Button type="submit" >
+                Submit
+              </Button>
+            )}
 
+            {submitClicked ? (
+              <AiOutlineLoading3Quarters className="animate-spin h-5 w-5 mr-3 fill-white " />
+            ) : (
+              <div />
+            )}
+            {submissionError ? (
+              <div>
+                Sorry, there has been an issue with your booking request.
+              </div>
+            ) : (
+              <div />
+            )}
+            {submissionSuccess ? (
+              <div>Thanks, we have received your booking request</div>
+            ) : (
+              <div />
+            )}
+          </div>
         </form>
       </Form>
     </div>
