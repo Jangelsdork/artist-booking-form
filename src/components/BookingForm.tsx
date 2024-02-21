@@ -56,6 +56,7 @@ import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
 import HandleRider from "./HandleRider"
 import { verifyCaptcha } from "../../ServerActions"
+import { before } from "node:test"
 
 
 const dayjs = require('dayjs')
@@ -502,6 +503,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                             selected={date}
                             onSelect={setDate}
                             initialFocus
+                            disabled={{ before: today }}
                           />
                         </PopoverContent>
                       </Popover>
@@ -988,6 +990,8 @@ const form = useForm<z.infer<typeof formSchema>>({
                             selected={dateAnnounce}
                             onSelect={setDateAnnounce}
                             initialFocus
+                            disabled={{ before: today }}
+
                           />
                         </PopoverContent>
                       </Popover>
