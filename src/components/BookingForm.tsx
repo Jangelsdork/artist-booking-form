@@ -7,7 +7,7 @@ import ReCAPTCHA from "react-google-recaptcha"
 import { useRef, useState } from "react"
 
   
-
+import Link from "next/link"
 
 
 import * as z from "zod"
@@ -584,9 +584,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                           <SelectContent>
                             <SelectItem value="EUR">EUR</SelectItem>
                             <SelectItem value="USD">USD</SelectItem>
-                            <SelectItem value="AUD">AUD</SelectItem>
                             <SelectItem value="GBP">GBP</SelectItem>
-                            <SelectItem value="CAD">CAD</SelectItem>
                           </SelectContent>
                         </Select>
                       </FormControl>
@@ -1485,6 +1483,9 @@ const form = useForm<z.infer<typeof formSchema>>({
             announce an event before contracts are signed, a deposit has been
             received by We are E, an announcement date has been agreed, and all
             billing and artwork has been approved.
+          </div>
+          <div className="text-xs max-w-[60vw]">
+            All bookings are subject to the full list of terms and conditions, which can be found <Link className="text-orange-600" href="https://wearee.nl/terms-conditions/" >here</Link>
           </div>
           {form.control._formValues.plus_bf ? (
                 <div className="text-xs text-wrap text-orange-600">
