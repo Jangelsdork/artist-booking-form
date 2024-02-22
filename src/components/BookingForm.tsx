@@ -1557,7 +1557,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   />
                 </FormControl>
                 <div className="space-y-1 leading-none">
-                  <FormLabel>Accept terms and conditions</FormLabel>
+                  <FormLabel>Accept terms and conditions & deposit amount</FormLabel>
                   <FormMessage className=" text-xs" />
                 </div>
               </FormItem>
