@@ -973,7 +973,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Other artists</FormLabel>
                     <FormControl>
-                      <Input placeholder="David Guetta, Tiesto..." {...field} />
+                      <Input placeholder="Satori, Sabo..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1014,7 +1014,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                     <FormLabel>Proposed timetable</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="David Guetta - 19:00 - 21:00, Tiesto - 21:00 - 23:00..."
+                        placeholder="Opener - 19:00 - 21:00, Main act - 21:00 - 23:00..."
                         {...field}
                       />
                     </FormControl>
