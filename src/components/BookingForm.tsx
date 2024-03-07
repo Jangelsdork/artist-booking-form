@@ -66,6 +66,7 @@ const today:Date = dayjs().format("YYYY-MM-DD")
 
 
 export const formSchema = z.object({
+  agent: z.string().min(4).max(5),
   first_name: z.string().min(2).max(50),
   last_name: z.string().min(2).max(50),
   email: z.string().email({ message: "Please enter a valid email address." }),
@@ -137,7 +138,7 @@ export type Schema = z.infer<typeof formSchema>
 
 
 // eslint-disable-next-line import/prefer-default-export
-export function BookingForm() {
+export function BookingForm(currentAgent:any) {
 
   const [date, setDate] = useState<Date>()
   const [dateAnnounce, setDateAnnounce] = useState<Date>()
@@ -191,6 +192,7 @@ export function BookingForm() {
 const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      agent: "jack",
       first_name: "",
       last_name: "",
       email: "",
@@ -258,6 +260,12 @@ const form = useForm<z.infer<typeof formSchema>>({
       termsConditions: false,
     },
   })
+
+  // //sets the agent value to the url that has been used. This is passed to the email handler
+
+  // if(currentAgent){
+  //   form.control._formValues.agent = currentAgent
+  // }
 
   const recaptchaRef = useRef<ReCAPTCHA>(null)
   const [isVerified, setIsverified] = useState<boolean>(false)
