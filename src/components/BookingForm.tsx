@@ -4,7 +4,7 @@
 'use client'
 
 import ReCAPTCHA from "react-google-recaptcha"
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 
   
 import Link from "next/link"
@@ -63,6 +63,8 @@ const dayjs = require('dayjs')
 
 
 const today:Date = dayjs().format("YYYY-MM-DD")
+
+
 
 
 export const formSchema = z.object({
@@ -138,7 +140,9 @@ export type Schema = z.infer<typeof formSchema>
 
 
 // eslint-disable-next-line import/prefer-default-export
-export function BookingForm(currentAgent:any) {
+export function BookingForm( { currentAgent }: { currentAgent:string} ) {
+
+
 
   const [date, setDate] = useState<Date>()
   const [dateAnnounce, setDateAnnounce] = useState<Date>()
@@ -188,6 +192,7 @@ export function BookingForm(currentAgent:any) {
               />
     )
   }
+
 
 const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -261,14 +266,20 @@ const form = useForm<z.infer<typeof formSchema>>({
     },
   })
 
-  // //sets the agent value to the url that has been used. This is passed to the email handler
 
-  // if(currentAgent){
+  // const { resetField } = useForm();
+
+  // // //sets the agent value to the url that has been used. This is passed to the email handler
+
+  // useEffect(() => {
+  //   // you can do async server request and fill up form
   //   form.control._formValues.agent = currentAgent
-  // }
+  // }, []);
 
-  const recaptchaRef = useRef<ReCAPTCHA>(null)
-  const [isVerified, setIsverified] = useState<boolean>(false)
+  // console.log(form.control._formValues.agent)
+
+  // const recaptchaRef = useRef<ReCAPTCHA>(null)
+  // const [isVerified, setIsverified] = useState<boolean>(false)
 
   // async function handleCaptchaSubmission(token: string | null) {
   //   // Server function to verify captcha
@@ -280,6 +291,9 @@ const form = useForm<z.infer<typeof formSchema>>({
   
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setSubmitClicked(true)
+    if(currentAgent){
+      values.agent=currentAgent.toString()
+    }
     try{
       const res: Response = await fetch ("/api/send-email",
       {
@@ -307,11 +321,6 @@ const form = useForm<z.infer<typeof formSchema>>({
 
   return (
     <div>
-      <script
-        src="https://www.google.com/recaptcha/api.js"
-        async
-        defer
-      ></script>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
