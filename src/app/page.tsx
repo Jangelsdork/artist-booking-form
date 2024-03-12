@@ -13,7 +13,7 @@ export default function Home() {
         <ModeToggle/> 
         </div>
       <h1  className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl pb-8">We Are E Artist Booking Form</h1>
-      <BookingForm />
+      <BookingForm currentAgent={undefined}/>
     </main>
   )
 }

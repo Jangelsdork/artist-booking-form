@@ -140,7 +140,7 @@ export type Schema = z.infer<typeof formSchema>
 
 
 // eslint-disable-next-line import/prefer-default-export
-export function BookingForm( { currentAgent }: { currentAgent:string|undefined} ) {
+export function BookingForm( { currentAgent }: { currentAgent:string|null} ) {
 
 
 
