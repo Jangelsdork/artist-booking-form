@@ -7,6 +7,7 @@ import { EmailTemplate } from '../../../components/emailTemplate';
 const { Resend } = require('resend');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+console.log(process.env.RESEND_API_KEY)
 
 export async function POST(req: NextRequest): Promise<NextResponse<unknown>> {
 
