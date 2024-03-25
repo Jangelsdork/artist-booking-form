@@ -195,7 +195,7 @@ export function BookingForm( { currentAgent }: { currentAgent:string|undefined} 
 const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      agent: "jack",
+      agent: "booking",
       first_name: "",
       last_name: "",
       email: "",
