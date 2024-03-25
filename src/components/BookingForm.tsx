@@ -332,7 +332,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>First Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Vince" {...field} />
+                      <Input placeholder="John" {...field} />
                     </FormControl>
                     <FormDescription>
                       Your name or contact person for this booking
@@ -348,7 +348,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Last Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Noir" {...field} />
+                      <Input placeholder="Smith" {...field} />
                     </FormControl>
                     <FormDescription></FormDescription>
                     <FormMessage />
@@ -363,7 +363,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="kingofthemods@yahoo.co.uk"
+                        placeholder="john@example.com"
                         {...field}
                       />
                     </FormControl>
@@ -381,7 +381,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Phone number</FormLabel>
                     <FormControl>
-                      <Input placeholder="+44 123 ... ... " {...field} />
+                      <Input placeholder="+31 123 ... ... " {...field} />
                     </FormControl>
                     <FormDescription>
                       Contact person phone number - please include the country
@@ -553,7 +553,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Event Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="The Pie Face Showcase" {...field} />
+                      <Input placeholder="Enter the name of your event..." {...field} />
                     </FormControl>
 
                     <FormMessage />
@@ -726,7 +726,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Venue name</FormLabel>
                     <FormControl>
-                      <Input placeholder="The Velvet Onion" {...field} />
+                      <Input placeholder="E.g: Nijmegen Town Hall " {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -740,7 +740,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                     <FormItem>
                       <FormLabel>Street</FormLabel>
                       <FormControl>
-                        <Input placeholder="First Street" {...field} />
+                        <Input placeholder="Korte Nieuwstraat" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -753,7 +753,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                     <FormItem>
                       <FormLabel>House no.</FormLabel>
                       <FormControl>
-                        <Input placeholder="100a" {...field} />
+                        <Input placeholder="6" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -767,7 +767,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>City</FormLabel>
                     <FormControl>
-                      <Input placeholder="Dalston" {...field} />
+                      <Input placeholder="Nijmegen" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -780,7 +780,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Country</FormLabel>
                     <FormControl>
-                      <Input placeholder="UK" {...field} />
+                      <Input placeholder="Netherlands" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -836,7 +836,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                     <FormLabel>Venue website</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="http://www.velvet-onion.co.uk"
+                        placeholder="https://www.nijmegen.nl/"
                         {...field}
                       />
                     </FormControl>
@@ -1228,7 +1228,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Signatory First Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Vince" {...field} />
+                      <Input placeholder="John" {...field} />
                     </FormControl>
 
                     <FormMessage />
@@ -1242,7 +1242,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Signatory Last Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Noir" {...field} />
+                      <Input placeholder="Smith" {...field} />
                     </FormControl>
                     <FormDescription></FormDescription>
                     <FormMessage />
@@ -1257,7 +1257,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                     <FormLabel>Signatory Email</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="kingofthemods@yahoo.co.uk"
+                        placeholder="john@example.com"
                         {...field}
                       />
                     </FormControl>
@@ -1272,7 +1272,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Signatory Phone number</FormLabel>
                     <FormControl>
-                      <Input placeholder="+44 123 ... ... " {...field} />
+                      <Input placeholder="+31 123 ... ... " {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1285,7 +1285,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Promoter website</FormLabel>
                     <FormControl>
-                      <Input placeholder="www.great-promo.co.uk" {...field} />
+                      <Input placeholder="www.john-promo.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1298,7 +1298,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Previously booked acts</FormLabel>
                     <FormControl>
-                      <Input placeholder="Scooter, Underworld..." {...field} />
+                      <Input placeholder="Britta Arnold, Gidge..." {...field} />
                     </FormControl>
                     <FormDescription></FormDescription>
                     <FormMessage />
@@ -1337,7 +1337,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                 <FormItem>
                   <FormLabel>Logistics contact first Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Vince" {...field} />
+                    <Input placeholder="Jill" {...field} />
                   </FormControl>
                   <FormDescription>
                     Your name or contact person for this booking
@@ -1353,7 +1353,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                 <FormItem>
                   <FormLabel>Last Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Noir" {...field} />
+                    <Input placeholder="Smith" {...field} />
                   </FormControl>
                   <FormDescription></FormDescription>
                   <FormMessage />
@@ -1367,7 +1367,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="kingofthemods@yahoo.co.uk" {...field} />
+                    <Input placeholder="jill@example.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -1380,7 +1380,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                 <FormItem>
                   <FormLabel>Phone number</FormLabel>
                   <FormControl>
-                    <Input placeholder="+44 123 ... ... " {...field} />
+                    <Input placeholder="+31 321 ... ... " {...field} />
                   </FormControl>
 
                   <FormMessage />
