@@ -289,6 +289,7 @@ const form = useForm<z.infer<typeof formSchema>>({
   
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setSubmitClicked(true)
+    console.log("submit")
     if(currentAgent){
       values.agent=currentAgent.toString()
     }
@@ -1589,7 +1590,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                 Submit
               </Button>
             ) : (
-              <Button type="submit" >
+              <Button type="submit" onClick={()=>console.log("Clicked")} >
                 Submit
               </Button>
             )}
