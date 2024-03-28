@@ -66,7 +66,7 @@ const today:Date = dayjs().format("YYYY-MM-DD")
 
 
 export const formSchema = z.object({
-  agent: z.string().min(4).max(5),
+  agent: z.string().min(4).max(7),
   first_name: z.string().min(2).max(50),
   last_name: z.string().min(2).max(50),
   email: z.string().email({ message: "Please enter a valid email address." }),
