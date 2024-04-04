@@ -490,7 +490,7 @@ const form = useForm<z.infer<typeof formSchema>>({
               <FormField
                 control={form.control}
                 name="event_date"
-                render={() => (
+                render={({ field }) => (
                   <FormItem>
                     <FormLabel className="flex flex-col pt-4 pb-1">
                       Event Date
@@ -502,12 +502,12 @@ const form = useForm<z.infer<typeof formSchema>>({
                             variant={"outline"}
                             className={cn(
                               "w-[280px] justify-start text-left font-normal",
-                              !date && "text-muted-foreground"
+                              !field.value && "text-muted-foreground"
                             )}
                           >
                             <CalendarIcon className="mr-2 h-4 w-4" />
-                            {date ? (
-                              format(date, "PPP")
+                            {field.value ? (
+                              format(field.value, "PPP")
                             ) : (
                               <span>Select date</span>
                             )}
@@ -516,8 +516,8 @@ const form = useForm<z.infer<typeof formSchema>>({
                         <PopoverContent className="w-auto p-0">
                           <Calendar
                             mode="single"
-                            selected={date}
-                            onSelect={setDate}
+                            selected={field.value}
+                            onSelect={field.onChange}
                             initialFocus
                             disabled={{ before: today }}
                           />
@@ -942,7 +942,7 @@ const form = useForm<z.infer<typeof formSchema>>({
               <FormField
                 control={form.control}
                 name="announcement"
-                render={() => (
+                render={({ field }) => (
                   <FormItem>
                     <FormLabel className="flex flex-col pt-4 pb-1">
                       Announcement date
@@ -954,12 +954,12 @@ const form = useForm<z.infer<typeof formSchema>>({
                             variant={"outline"}
                             className={cn(
                               "w-[280px] justify-start text-left font-normal",
-                              !dateAnnounce && "text-muted-foreground"
+                              !field.value && "text-muted-foreground"
                             )}
                           >
                             <CalendarIcon className="mr-2 h-4 w-4" />
-                            {dateAnnounce ? (
-                              format(dateAnnounce, "PPP")
+                            {field.value ? (
+                              format(field.value, "PPP")
                             ) : (
                               <span>Select date</span>
                             )}
@@ -968,8 +968,8 @@ const form = useForm<z.infer<typeof formSchema>>({
                         <PopoverContent className="w-auto p-0">
                           <Calendar
                             mode="single"
-                            selected={dateAnnounce}
-                            onSelect={setDateAnnounce}
+                            selected={field.value}
+                            onSelect={field.onChange}
                             initialFocus
                             disabled={{ before: today }}
 
