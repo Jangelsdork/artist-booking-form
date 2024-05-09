@@ -264,28 +264,6 @@ const form = useForm<z.infer<typeof formSchema>>({
   })
 
 
-  // const { resetField } = useForm();
-
-  // // //sets the agent value to the url that has been used. This is passed to the email handler
-
-  // useEffect(() => {
-  //   // you can do async server request and fill up form
-  //   form.control._formValues.agent = currentAgent
-  // }, []);
-
-  // console.log(form.control._formValues.agent)
-
-  // const recaptchaRef = useRef<ReCAPTCHA>(null)
-  // const [isVerified, setIsverified] = useState<boolean>(false)
-
-  // async function handleCaptchaSubmission(token: string | null) {
-  //   // Server function to verify captcha
-  //   await verifyCaptcha(token)
-  //     .then(() => setIsverified(true))
-  //     .catch(() => setIsverified(false))
-  // }
-
-  
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setSubmitClicked(true)
     console.log("submit")
@@ -303,10 +281,14 @@ const form = useForm<z.infer<typeof formSchema>>({
         },
       })
       const data = await res.json();
-      if(data){
+      if(data.error === null){
         console.log(data)
         setSubmitClicked(false)
         setSubmissionSuccess(true)
+      }
+      else{
+        setSubmissionError(true)
+        setSubmitClicked(false)
       }
     }
     catch (error){
