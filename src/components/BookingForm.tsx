@@ -4,10 +4,10 @@
 'use client'
 
 import ReCAPTCHA from "react-google-recaptcha"
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 
   
-
+import Link from "next/link"
 
 
 import * as z from "zod"
@@ -54,9 +54,7 @@ import {
 import { Switch } from "@/components/ui/switch"
 
 import { Textarea } from "@/components/ui/textarea"
-import HandleRider from "./HandleRider"
-import { verifyCaptcha } from "../../ServerActions"
-import { before } from "node:test"
+
 
 
 const dayjs = require('dayjs')
@@ -64,8 +62,11 @@ const dayjs = require('dayjs')
 
 const today:Date = dayjs().format("YYYY-MM-DD")
 
+//literally just making a comment so I can commit 
+
 
 export const formSchema = z.object({
+  agent: z.string().min(4).max(7),
   first_name: z.string().min(2).max(50),
   last_name: z.string().min(2).max(50),
   email: z.string().email({ message: "Please enter a valid email address." }),
@@ -137,7 +138,9 @@ export type Schema = z.infer<typeof formSchema>
 
 
 // eslint-disable-next-line import/prefer-default-export
-export function BookingForm() {
+export function BookingForm( { currentAgent }: { currentAgent:string|undefined} ) {
+
+
 
   const [date, setDate] = useState<Date>()
   const [dateAnnounce, setDateAnnounce] = useState<Date>()
@@ -188,9 +191,11 @@ export function BookingForm() {
     )
   }
 
+
 const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      agent: "booking",
       first_name: "",
       last_name: "",
       email: "",
@@ -259,8 +264,20 @@ const form = useForm<z.infer<typeof formSchema>>({
     },
   })
 
-  const recaptchaRef = useRef<ReCAPTCHA>(null)
-  const [isVerified, setIsverified] = useState<boolean>(false)
+
+  // const { resetField } = useForm();
+
+  // // //sets the agent value to the url that has been used. This is passed to the email handler
+
+  // useEffect(() => {
+  //   // you can do async server request and fill up form
+  //   form.control._formValues.agent = currentAgent
+  // }, []);
+
+  // console.log(form.control._formValues.agent)
+
+  // const recaptchaRef = useRef<ReCAPTCHA>(null)
+  // const [isVerified, setIsverified] = useState<boolean>(false)
 
   // async function handleCaptchaSubmission(token: string | null) {
   //   // Server function to verify captcha
@@ -272,6 +289,10 @@ const form = useForm<z.infer<typeof formSchema>>({
   
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setSubmitClicked(true)
+    console.log("submit")
+    if(currentAgent){
+      values.agent=currentAgent.toString()
+    }
     try{
       const res: Response = await fetch ("/api/send-email",
       {
@@ -299,11 +320,6 @@ const form = useForm<z.infer<typeof formSchema>>({
 
   return (
     <div>
-      <script
-        src="https://www.google.com/recaptcha/api.js"
-        async
-        defer
-      ></script>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -317,7 +333,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>First Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Vince" {...field} />
+                      <Input placeholder="John" {...field} />
                     </FormControl>
                     <FormDescription>
                       Your name or contact person for this booking
@@ -333,7 +349,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Last Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Noir" {...field} />
+                      <Input placeholder="Smith" {...field} />
                     </FormControl>
                     <FormDescription></FormDescription>
                     <FormMessage />
@@ -348,7 +364,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="kingofthemods@yahoo.co.uk"
+                        placeholder="john@example.com"
                         {...field}
                       />
                     </FormControl>
@@ -366,7 +382,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Phone number</FormLabel>
                     <FormControl>
-                      <Input placeholder="+44 123 ... ... " {...field} />
+                      <Input placeholder="+31 123 ... ... " {...field} />
                     </FormControl>
                     <FormDescription>
                       Contact person phone number - please include the country
@@ -474,7 +490,7 @@ const form = useForm<z.infer<typeof formSchema>>({
               <FormField
                 control={form.control}
                 name="event_date"
-                render={() => (
+                render={({ field }) => (
                   <FormItem>
                     <FormLabel className="flex flex-col pt-4 pb-1">
                       Event Date
@@ -486,12 +502,12 @@ const form = useForm<z.infer<typeof formSchema>>({
                             variant={"outline"}
                             className={cn(
                               "w-[280px] justify-start text-left font-normal",
-                              !date && "text-muted-foreground"
+                              !field.value && "text-muted-foreground"
                             )}
                           >
                             <CalendarIcon className="mr-2 h-4 w-4" />
-                            {date ? (
-                              format(date, "PPP")
+                            {field.value ? (
+                              format(field.value, "PPP")
                             ) : (
                               <span>Select date</span>
                             )}
@@ -500,8 +516,8 @@ const form = useForm<z.infer<typeof formSchema>>({
                         <PopoverContent className="w-auto p-0">
                           <Calendar
                             mode="single"
-                            selected={date}
-                            onSelect={setDate}
+                            selected={field.value}
+                            onSelect={field.onChange}
                             initialFocus
                             disabled={{ before: today }}
                           />
@@ -538,7 +554,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Event Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="The Pie Face Showcase" {...field} />
+                      <Input placeholder="Enter the name of your event..." {...field} />
                     </FormControl>
 
                     <FormMessage />
@@ -584,9 +600,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                           <SelectContent>
                             <SelectItem value="EUR">EUR</SelectItem>
                             <SelectItem value="USD">USD</SelectItem>
-                            <SelectItem value="AUD">AUD</SelectItem>
                             <SelectItem value="GBP">GBP</SelectItem>
-                            <SelectItem value="CAD">CAD</SelectItem>
                           </SelectContent>
                         </Select>
                       </FormControl>
@@ -713,7 +727,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Venue name</FormLabel>
                     <FormControl>
-                      <Input placeholder="The Velvet Onion" {...field} />
+                      <Input placeholder="E.g: Nijmegen Town Hall " {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -727,7 +741,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                     <FormItem>
                       <FormLabel>Street</FormLabel>
                       <FormControl>
-                        <Input placeholder="First Street" {...field} />
+                        <Input placeholder="Korte Nieuwstraat" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -740,7 +754,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                     <FormItem>
                       <FormLabel>House no.</FormLabel>
                       <FormControl>
-                        <Input placeholder="100a" {...field} />
+                        <Input placeholder="6" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -754,7 +768,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>City</FormLabel>
                     <FormControl>
-                      <Input placeholder="Dalston" {...field} />
+                      <Input placeholder="Nijmegen" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -767,7 +781,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Country</FormLabel>
                     <FormControl>
-                      <Input placeholder="UK" {...field} />
+                      <Input placeholder="Netherlands" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -823,7 +837,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                     <FormLabel>Venue website</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="http://www.velvet-onion.co.uk"
+                        placeholder="https://www.nijmegen.nl/"
                         {...field}
                       />
                     </FormControl>
@@ -928,7 +942,7 @@ const form = useForm<z.infer<typeof formSchema>>({
               <FormField
                 control={form.control}
                 name="announcement"
-                render={() => (
+                render={({ field }) => (
                   <FormItem>
                     <FormLabel className="flex flex-col pt-4 pb-1">
                       Announcement date
@@ -940,12 +954,12 @@ const form = useForm<z.infer<typeof formSchema>>({
                             variant={"outline"}
                             className={cn(
                               "w-[280px] justify-start text-left font-normal",
-                              !dateAnnounce && "text-muted-foreground"
+                              !field.value && "text-muted-foreground"
                             )}
                           >
                             <CalendarIcon className="mr-2 h-4 w-4" />
-                            {dateAnnounce ? (
-                              format(dateAnnounce, "PPP")
+                            {field.value ? (
+                              format(field.value, "PPP")
                             ) : (
                               <span>Select date</span>
                             )}
@@ -954,8 +968,8 @@ const form = useForm<z.infer<typeof formSchema>>({
                         <PopoverContent className="w-auto p-0">
                           <Calendar
                             mode="single"
-                            selected={dateAnnounce}
-                            onSelect={setDateAnnounce}
+                            selected={field.value}
+                            onSelect={field.onChange}
                             initialFocus
                             disabled={{ before: today }}
 
@@ -975,7 +989,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Other artists</FormLabel>
                     <FormControl>
-                      <Input placeholder="David Guetta, Tiesto..." {...field} />
+                      <Input placeholder="Satori, Sabo..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1016,7 +1030,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                     <FormLabel>Proposed timetable</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="David Guetta - 19:00 - 21:00, Tiesto - 21:00 - 23:00..."
+                        placeholder="Opener - 19:00 - 21:00, Main act - 21:00 - 23:00..."
                         {...field}
                       />
                     </FormControl>
@@ -1215,7 +1229,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Signatory First Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Vince" {...field} />
+                      <Input placeholder="John" {...field} />
                     </FormControl>
 
                     <FormMessage />
@@ -1229,7 +1243,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Signatory Last Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Noir" {...field} />
+                      <Input placeholder="Smith" {...field} />
                     </FormControl>
                     <FormDescription></FormDescription>
                     <FormMessage />
@@ -1244,7 +1258,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                     <FormLabel>Signatory Email</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="kingofthemods@yahoo.co.uk"
+                        placeholder="john@example.com"
                         {...field}
                       />
                     </FormControl>
@@ -1259,7 +1273,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Signatory Phone number</FormLabel>
                     <FormControl>
-                      <Input placeholder="+44 123 ... ... " {...field} />
+                      <Input placeholder="+31 123 ... ... " {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1272,7 +1286,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Promoter website</FormLabel>
                     <FormControl>
-                      <Input placeholder="www.great-promo.co.uk" {...field} />
+                      <Input placeholder="www.john-promo.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1285,7 +1299,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   <FormItem>
                     <FormLabel>Previously booked acts</FormLabel>
                     <FormControl>
-                      <Input placeholder="Scooter, Underworld..." {...field} />
+                      <Input placeholder="Britta Arnold, Gidge..." {...field} />
                     </FormControl>
                     <FormDescription></FormDescription>
                     <FormMessage />
@@ -1324,7 +1338,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                 <FormItem>
                   <FormLabel>Logistics contact first Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Vince" {...field} />
+                    <Input placeholder="Jill" {...field} />
                   </FormControl>
                   <FormDescription>
                     Your name or contact person for this booking
@@ -1340,7 +1354,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                 <FormItem>
                   <FormLabel>Last Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Noir" {...field} />
+                    <Input placeholder="Smith" {...field} />
                   </FormControl>
                   <FormDescription></FormDescription>
                   <FormMessage />
@@ -1354,7 +1368,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="kingofthemods@yahoo.co.uk" {...field} />
+                    <Input placeholder="jill@example.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -1367,7 +1381,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                 <FormItem>
                   <FormLabel>Phone number</FormLabel>
                   <FormControl>
-                    <Input placeholder="+44 123 ... ... " {...field} />
+                    <Input placeholder="+31 321 ... ... " {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -1486,6 +1500,9 @@ const form = useForm<z.infer<typeof formSchema>>({
             received by We are E, an announcement date has been agreed, and all
             billing and artwork has been approved.
           </div>
+          <div className="text-xs max-w-[60vw]">
+            All bookings are subject to the full list of terms and conditions, which can be found <Link className="text-orange-600" href="https://wearee.nl/terms-conditions/" >here</Link>
+          </div>
           {form.control._formValues.plus_bf ? (
                 <div className="text-xs text-wrap text-orange-600 font-bold">
                   Note: deals with booking fee on top require a deposit of the
@@ -1556,7 +1573,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                   />
                 </FormControl>
                 <div className="space-y-1 leading-none">
-                  <FormLabel>Accept terms and conditions</FormLabel>
+                  <FormLabel>Accept terms and conditions & deposit amount</FormLabel>
                   <FormMessage className=" text-xs" />
                 </div>
               </FormItem>
@@ -1573,7 +1590,7 @@ const form = useForm<z.infer<typeof formSchema>>({
                 Submit
               </Button>
             ) : (
-              <Button type="submit" >
+              <Button type="submit" onClick={()=>console.log("Clicked")} >
                 Submit
               </Button>
             )}

@@ -3,8 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Schema } from '@/components/BookingForm';
 import { EmailTemplate } from '../../../components/emailTemplate';
-
-const { Resend } = require('resend');
+import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -14,10 +13,11 @@ export async function POST(req: NextRequest): Promise<NextResponse<unknown>> {
 
   try {
     const data = await resend.emails.send({
-      from: 'Acme <onboarding@resend.dev>',
-      to: ['j.hespe.mangelsdorf@gmail.com'],
-      subject: "New booking request",
+      from: 'Booking König WE ARE E <booking@wearee.nl>',
+      to: [`${formData.agent}@wearee.nl`],
+      subject: `New booking request for ${formData.artist_name} @ ${formData.venue_city}`,
       react: EmailTemplate({ ...formData }),
+      text:''
     });
 
     return NextResponse.json(data);
