@@ -3,8 +3,7 @@
 
 'use client'
 
-import ReCAPTCHA from "react-google-recaptcha"
-import { useRef, useState, useEffect } from "react"
+import { useState } from "react"
 
   
 import Link from "next/link"
@@ -62,7 +61,7 @@ const dayjs = require('dayjs')
 
 const today:Date = dayjs().format("YYYY-MM-DD")
 
-//literally just making a comment so I can commit 
+// literally just making a comment so I can commit 
 
 
 export const formSchema = z.object({
@@ -112,6 +111,7 @@ export const formSchema = z.object({
   company_street: z.string().min(2).max(50).or(z.literal('')),
   company_number: z.string().min(1).max(10).or(z.literal('')),
   company_city: z.string().min(2).max(50).or(z.literal('')),
+  company_postcode: z.string().min(2).max(10).or(z.literal('')),
   company_country: z.string().min(2).max(50).or(z.literal('')),
   vat: z.boolean().optional(),
   company_vat: z.string().min(6).max(20).or(z.literal('')),
@@ -142,8 +142,6 @@ export function BookingForm( { currentAgent }: { currentAgent:string|undefined} 
 
 
 
-  const [date, setDate] = useState<Date>()
-  const [dateAnnounce, setDateAnnounce] = useState<Date>()
   const [submitClicked, setSubmitClicked] = useState<boolean>(false)
   const [submissionError, setSubmissionError] = useState<boolean>(false)
   const [submissionSuccess, setSubmissionSuccess] = useState<boolean>(false)
@@ -241,6 +239,7 @@ const form = useForm<z.infer<typeof formSchema>>({
       company_street: "",
       company_number: "",
       company_city: "",
+      company_postcode: "",
       company_country: "",
       vat: true, 
       company_vat: "",
@@ -1174,6 +1173,8 @@ const form = useForm<z.infer<typeof formSchema>>({
                   )}
                 />
               </div>
+
+              <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
                 name="company_city"
@@ -1187,6 +1188,20 @@ const form = useForm<z.infer<typeof formSchema>>({
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="company_postcode"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Postcode</FormLabel>
+                    <FormControl>
+                      <Input placeholder="10824" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              </div>
 
               <FormField
                 control={form.control}
