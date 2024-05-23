@@ -75,7 +75,7 @@ export const formSchema = z.object({
   event_date: z.coerce.date().min(new Date(today), { message: "Date must be in the future" }),
   alternative_dates: z.string().max(50).optional(),
   event_name: z.string().min(2).max(50),
-  financial_offer: z.number(),
+  financial_offer: z.number().min(100),
   currency: z.string().min(3).max(3),
   plus_bf: z.boolean(),
   plus_flights: z.boolean(),
