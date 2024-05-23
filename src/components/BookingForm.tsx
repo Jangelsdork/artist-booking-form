@@ -407,6 +407,12 @@ const form = useForm<z.infer<typeof formSchema>>({
                           <SelectItem value="britta-arnold">
                             Britta Arnold
                           </SelectItem>
+                          <SelectItem value="caleesi">
+                            Caleesi
+                          </SelectItem>
+                          <SelectItem value="caleesi-&-sarah">
+                            Caleesi & Sarah Kreis
+                          </SelectItem>
                           <SelectItem value="gidge">Gidge</SelectItem>
                           <SelectItem value="glauco-di-mambro">
                             Glauco Di Mambro
@@ -424,8 +430,11 @@ const form = useForm<z.infer<typeof formSchema>>({
                           <SelectItem value="patrice-baumel">
                             Patrice Bäumel
                           </SelectItem>
-                          <SelectItem value="sabo">Sabo</SelectItem>
+                          <SelectItem value="sabo">
+                            Sabo
+                            </SelectItem>
                           <SelectItem value="sainte-vie">Sainte Vie</SelectItem>
+                          <SelectItem value="sarah-kreis">Sarah Kreis</SelectItem>
                           <SelectItem value="satori">Satori</SelectItem>
                           <SelectItem value="sora">Sorä</SelectItem>
                           <SelectItem value="unders">Unders</SelectItem>
