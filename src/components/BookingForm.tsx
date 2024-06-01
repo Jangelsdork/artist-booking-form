@@ -266,37 +266,48 @@ const form = useForm<z.infer<typeof formSchema>>({
 
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setSubmitClicked(true)
-    console.log("submit")
-    if(currentAgent){
-      values.agent=currentAgent.toString()
+    setSubmitClicked(true);
+    console.log("submit");
+    if (currentAgent) {
+      values.agent = currentAgent.toString();
     }
-    try{
-      const res: Response = await fetch ("/api/send-email",
-      {
+    try {
+      const res: Response = await fetch("/api/send-email", {
         method: "POST",
         mode: "cors",
         body: JSON.stringify(values),
         headers: {
-          "content-type": "application/json"
+          "content-type": "application/json",
         },
-      })
+      });
       const data = await res.json();
-      if(data.error === null){
-        console.log(data)
-        setSubmitClicked(false)
-        setSubmissionSuccess(true)
+      if (data.error === null) {
+        console.log(data);
+        setSubmitClicked(false);
+        setSubmissionSuccess(true);
+      } else {
+        setSubmissionError(true);
+        setSubmitClicked(false);
       }
-      else{
-        setSubmissionError(true)
-        setSubmitClicked(false)
-      }
+    } catch (error) {
+      console.log(error);
+      setSubmissionError(true);
     }
-    catch (error){
-      console.log(error)
-      setSubmissionError(true)
+    try {
+      const res: Response = await fetch("/api/add-promoter", {
+        method: "POST",
+        mode: "cors",
+        body: JSON.stringify(values),
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
   
 
