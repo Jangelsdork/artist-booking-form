@@ -3,8 +3,10 @@
 
 'use client'
 
-import ReCAPTCHA from "react-google-recaptcha"
 import { useRef, useState, useEffect } from "react"
+
+import CookieConsent from "react-cookie-consent";
+
 
   
 import Link from "next/link"
@@ -1608,6 +1610,7 @@ const form = useForm<z.infer<typeof formSchema>>({
           </div>
         </form>
       </Form>
+      <CookieConsent>This website uses cookies to enhance the user experience.</CookieConsent>
     </div>
   );
 
