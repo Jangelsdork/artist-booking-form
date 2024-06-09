@@ -1,9 +1,11 @@
+/* eslint-disable prefer-template */
+/* eslint-disable no-param-reassign */
 /* eslint-disable import/extensions */
 /* eslint-disable no-underscore-dangle */
 
 'use client'
 
-import { useRef, useState, useEffect } from "react"
+import { useState } from "react"
 
 import CookieConsent from "react-cookie-consent";
 
@@ -63,9 +65,6 @@ const dayjs = require('dayjs')
 
 
 const today:Date = dayjs().format("YYYY-MM-DD")
-
-//literally just making a comment so I can commit 
-
 
 export const formSchema = z.object({
   agent: z.string().min(4).max(7),
@@ -143,9 +142,6 @@ export type Schema = z.infer<typeof formSchema>
 export function BookingForm( { currentAgent }: { currentAgent:string|undefined} ) {
 
 
-
-  const [date, setDate] = useState<Date>()
-  const [dateAnnounce, setDateAnnounce] = useState<Date>()
   const [submitClicked, setSubmitClicked] = useState<boolean>(false)
   const [submissionError, setSubmissionError] = useState<boolean>(false)
   const [submissionSuccess, setSubmissionSuccess] = useState<boolean>(false)
