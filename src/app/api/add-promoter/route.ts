@@ -9,7 +9,7 @@ const client = createClient({
   authToken: process.env.DATABASE_AUTH_TOKEN,
 });
 
-
+console.log(process.env.DATABASE_URL)
  
 // eslint-disable-next-line import/prefer-default-export
 export async function POST(request: Request){
