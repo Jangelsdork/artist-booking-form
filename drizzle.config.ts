@@ -1,3 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
+
 import { defineConfig } from "drizzle-kit";
 
 console.log(process.env.DATABASE_URL)
@@ -7,7 +9,7 @@ export default defineConfig({
   schema: "./src/db/schema",
   driver: "turso",
   dbCredentials: {
-    url: "libsql://artist-booking-form-jangelsdork.turso.io",
+    url: process.env.DATABASE_URL!,
     authToken: process.env.DATABASE_AUTH_TOKEN
   },
   out: "./drizzle",
