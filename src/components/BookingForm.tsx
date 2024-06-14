@@ -7,6 +7,7 @@
 
 import { useState } from "react"
 
+
 import CookieConsent from "react-cookie-consent";
 
 
@@ -66,6 +67,7 @@ const dayjs = require('dayjs')
 
 const today:Date = dayjs().format("YYYY-MM-DD")
 
+  
 export const formSchema = z.object({
   agent: z.string().min(4).max(7),
   first_name: z.string().min(2).max(50),
@@ -77,7 +79,7 @@ export const formSchema = z.object({
   event_date: z.coerce.date().min(new Date(today), { message: "Date must be in the future" }),
   alternative_dates: z.string().max(50).optional(),
   event_name: z.string().min(2).max(50),
-  financial_offer: z.number(),
+  financial_offer: z.number().min(100),
   currency: z.string().min(3).max(3),
   plus_bf: z.boolean(),
   plus_flights: z.boolean(),
@@ -113,6 +115,7 @@ export const formSchema = z.object({
   company_street: z.string().min(2).max(50).or(z.literal('')),
   company_number: z.string().min(1).max(10).or(z.literal('')),
   company_city: z.string().min(2).max(50).or(z.literal('')),
+  company_postcode: z.string().min(2).max(10).or(z.literal('')),
   company_country: z.string().min(2).max(50).or(z.literal('')),
   vat: z.boolean().optional(),
   company_vat: z.string().min(6).max(20).or(z.literal('')),
@@ -140,6 +143,7 @@ export type Schema = z.infer<typeof formSchema>
 
 // eslint-disable-next-line import/prefer-default-export
 export function BookingForm( { currentAgent }: { currentAgent:string|undefined} ) {
+
 
 
   const [submitClicked, setSubmitClicked] = useState<boolean>(false)
@@ -239,6 +243,7 @@ const form = useForm<z.infer<typeof formSchema>>({
       company_street: "",
       company_number: "",
       company_city: "",
+      company_postcode: "",
       company_country: "",
       vat: true, 
       company_vat: "",
@@ -417,6 +422,12 @@ const form = useForm<z.infer<typeof formSchema>>({
                           <SelectItem value="britta-arnold">
                             Britta Arnold
                           </SelectItem>
+                          <SelectItem value="caleesi">
+                            Caleesi
+                          </SelectItem>
+                          <SelectItem value="caleesi-&-sarah">
+                            Caleesi & Sarah Kreis
+                          </SelectItem>
                           <SelectItem value="gidge">Gidge</SelectItem>
                           <SelectItem value="glauco-di-mambro">
                             Glauco Di Mambro
@@ -434,8 +445,11 @@ const form = useForm<z.infer<typeof formSchema>>({
                           <SelectItem value="patrice-baumel">
                             Patrice Bäumel
                           </SelectItem>
-                          <SelectItem value="sabo">Sabo</SelectItem>
+                          <SelectItem value="sabo">
+                            Sabo
+                            </SelectItem>
                           <SelectItem value="sainte-vie">Sainte Vie</SelectItem>
+                          <SelectItem value="sarah-kreis">Sarah Kreis</SelectItem>
                           <SelectItem value="satori">Satori</SelectItem>
                           <SelectItem value="sora">Sorä</SelectItem>
                           <SelectItem value="unders">Unders</SelectItem>
@@ -1165,6 +1179,8 @@ const form = useForm<z.infer<typeof formSchema>>({
                   )}
                 />
               </div>
+
+              <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
                 name="company_city"
@@ -1178,6 +1194,20 @@ const form = useForm<z.infer<typeof formSchema>>({
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="company_postcode"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Postcode</FormLabel>
+                    <FormControl>
+                      <Input placeholder="10824" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              </div>
 
               <FormField
                 control={form.control}

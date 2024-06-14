@@ -48,7 +48,7 @@ export const EmailTemplate: React.FC<Readonly<Schema>> = ({
     {!formData.prev_booker? (
       <div>
          <div>{formData.company_street} {formData.company_number},</div>
-         <div>{formData.company_city} {formData.company_country}</div>
+         <div>{formData.company_city}, {formData.company_postcode} {formData.company_country}</div>
          <div>{formData.vat ? formData.company_vat : "no VAT number given"}</div>
          <div><b>Signatory: </b> {formData.signatory_first} {formData.signatory_last}</div>
          <div><b>Email: </b> {formData.signatory_email}</div>    
