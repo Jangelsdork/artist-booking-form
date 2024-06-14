@@ -1,9 +1,15 @@
+/* eslint-disable prefer-template */
+/* eslint-disable no-param-reassign */
 /* eslint-disable import/extensions */
 /* eslint-disable no-underscore-dangle */
 
 'use client'
 
 import { useState } from "react"
+
+
+import CookieConsent from "react-cookie-consent";
+
 
   
 import Link from "next/link"
@@ -61,9 +67,7 @@ const dayjs = require('dayjs')
 
 const today:Date = dayjs().format("YYYY-MM-DD")
 
-// literally just making a comment so I can commit 
-
-
+  
 export const formSchema = z.object({
   agent: z.string().min(4).max(7),
   first_name: z.string().min(2).max(50),
@@ -265,37 +269,48 @@ const form = useForm<z.infer<typeof formSchema>>({
 
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setSubmitClicked(true)
-    console.log("submit")
-    if(currentAgent){
-      values.agent=currentAgent.toString()
+    setSubmitClicked(true);
+    console.log("submit");
+    if (currentAgent) {
+      values.agent = currentAgent.toString();
     }
-    try{
-      const res: Response = await fetch ("/api/send-email",
-      {
+    try {
+      const res: Response = await fetch("/api/send-email", {
         method: "POST",
         mode: "cors",
         body: JSON.stringify(values),
         headers: {
-          "content-type": "application/json"
+          "content-type": "application/json",
         },
-      })
+      });
       const data = await res.json();
-      if(data.error === null){
-        console.log(data)
-        setSubmitClicked(false)
-        setSubmissionSuccess(true)
+      if (data.error === null) {
+        console.log(data);
+        setSubmitClicked(false);
+        setSubmissionSuccess(true);
+      } else {
+        setSubmissionError(true);
+        setSubmitClicked(false);
       }
-      else{
-        setSubmissionError(true)
-        setSubmitClicked(false)
-      }
+    } catch (error) {
+      console.log(error);
+      setSubmissionError(true);
     }
-    catch (error){
-      console.log(error)
-      setSubmissionError(true)
+    try {
+      const res: Response = await fetch("/api/add-promoter", {
+        method: "POST",
+        mode: "cors",
+        body: JSON.stringify(values),
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
   
 
@@ -1621,6 +1636,7 @@ const form = useForm<z.infer<typeof formSchema>>({
           </div>
         </form>
       </Form>
+      <CookieConsent>This website uses cookies to enhance the user experience.</CookieConsent>
     </div>
   );
 

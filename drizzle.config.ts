@@ -1,4 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
+
 import { defineConfig } from "drizzle-kit";
+
+console.log(process.env.DATABASE_URL)
 
 export default defineConfig({
   dialect: "sqlite",

@@ -2,8 +2,9 @@
 /* eslint-disable import/prefer-default-export */
 import { NextRequest, NextResponse } from 'next/server';
 import { Schema } from '@/components/BookingForm';
-import { EmailTemplate } from '../../../components/emailTemplate';
 import { Resend } from 'resend';
+
+import { EmailTemplate } from '../../../components/emailTemplate';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 

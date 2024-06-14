@@ -1,3 +1,5 @@
+/* eslint-disable import/extensions */
+/* eslint-disable eqeqeq */
 import { ModeToggle } from "@/components/mode-toggle"
 import { BookingForm } from "@/components/BookingForm"
 import { redirect } from 'next/navigation';
@@ -6,7 +8,6 @@ import { redirect } from 'next/navigation';
 export default function Page({ params }: { params: { slug: string } }) {
   
   const currentUrl:string = params.slug
-  console.log(currentUrl)
 
   if(currentUrl!="jason" && currentUrl!="pete" && currentUrl!="cameron"){
     redirect("/")
