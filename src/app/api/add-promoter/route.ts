@@ -1,5 +1,7 @@
 /* eslint-disable import/extensions */
 /* eslint-disable camelcase */
+"use server"
+
 import { createClient } from "@libsql/client";
 import { NextResponse } from "next/server";
 import { Schema } from '@/components/BookingForm';
