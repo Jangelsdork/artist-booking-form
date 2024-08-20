@@ -276,6 +276,7 @@ const form = useForm<z.infer<typeof formSchema>>({
       values.agent = currentAgent.toString();
     };
 
+    // these two if statements convert the dates from UTC to the user's local time, so that the correct date is always reflected. 
     if (values.event_date) {
     const adjustedDate = new Date(
       values.event_date.getTime() - values.event_date.getTimezoneOffset() * 60000
