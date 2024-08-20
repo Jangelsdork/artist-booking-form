@@ -8,26 +8,27 @@ import { Schema } from './BookingForm';
 
 export const EmailTemplate: React.FC<Readonly<Schema>> = ({
   ...formData
-}) => {
+}) => 
+  // {
 
-function correctBookingDate(){
-  const utcEventDate = new Date(formData.event_date)
-  const timezoneOffset = new Date().getTimezoneOffset();
+// function correctBookingDate(){
+//   const utcEventDate = new Date(formData.event_date)
+//   const timezoneOffset = new Date().getTimezoneOffset();
 
-  const localEventTime = new Date(utcEventDate.getTime() - timezoneOffset * 60000)
-  console.log(localEventTime)
-  return localEventTime
+//   const localEventTime = new Date(utcEventDate.getTime() - timezoneOffset * 60000)
+//   console.log(localEventTime)
+//   return localEventTime
   
-}
-function correctAnnouncementDate(){
-  const utcEventDate = new Date(formData.announcement)
-  const timezoneOffset = new Date().getTimezoneOffset();
+// }
+// function correctAnnouncementDate(){
+//   const utcEventDate = new Date(formData.announcement)
+//   const timezoneOffset = new Date().getTimezoneOffset();
 
-  const localEventTime = new Date(utcEventDate.getTime() - timezoneOffset * 60000)
-  console.log(localEventTime)
-  return localEventTime
+//   const localEventTime = new Date(utcEventDate.getTime() - timezoneOffset * 60000)
+//   console.log(localEventTime)
+//   return localEventTime
   
-}
+// }
 
 // function reformatDate(){
 //   const dateTimeFormat = new Intl.DateTimeFormat('en', {
@@ -40,7 +41,8 @@ function correctAnnouncementDate(){
 //   return formattedDate
 // }
 
-return (
+// return 
+(
   <div >
     <h1>New booking request for {formData.artist_name}!</h1>
     <h2><b>Promoter details</b></h2>
@@ -51,7 +53,7 @@ return (
     <h2><b>Booking details</b></h2>
     <div><b>Artist: </b>{formData.artist_name} </div>
     <div><b>Performance type: </b> {formData.type_performance}</div>
-    <div><b>Event date: </b>{correctBookingDate().toString()} </div>
+    <div><b>Event date: </b>{formData.event_date.toString()} </div>
     {/* <div><b>Event date: </b>{reformatDate().toString()} </div> */}
     <div><b>Alternative dates: </b> {formData.alternative_dates ? formData.alternative_dates : "None proposed"} </div>
     <div><b>Event Name: </b>{formData.event_name} </div>
@@ -69,7 +71,7 @@ return (
     <div><b>Stage/booth/other:</b> {formData.stage_or_booth}</div>
     <div><b>Ticket price in advance: </b> {formData.ticket_price_adv}&nbsp;&nbsp;&nbsp;&nbsp;<b>Ticket price day of event: </b> {formData.ticket_price_dos}</div>
     <div><b>Billing: </b> {formData.billing}</div>
-    <div><b>Announcement date: </b> {correctAnnouncementDate().toString()} </div>
+    <div><b>Announcement date: </b> {formData.announcement.toString()} </div>
     <div><b>Other artist: </b> {formData.other_artists} </div>
     <div><b>Proposed stage: </b> {formData.artist_stage}</div>
     <div><b>Proposed playtime:</b>{formData.proposed_playtime}</div>
@@ -109,4 +111,4 @@ return (
 
   </div>
 );
-}
+// }

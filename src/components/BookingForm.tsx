@@ -274,9 +274,20 @@ const form = useForm<z.infer<typeof formSchema>>({
 
     if (currentAgent) {
       values.agent = currentAgent.toString();
-    }
-   
+    };
 
+    if (values.event_date) {
+    const adjustedDate = new Date(
+      values.event_date.getTime() - values.event_date.getTimezoneOffset() * 60000
+    )
+    values.event_date = adjustedDate
+  }
+    if (values.announcement) {
+    const adjustedDate = new Date(
+      values.announcement.getTime() - values.announcement.getTimezoneOffset() * 60000
+    )
+    values.announcement = adjustedDate
+  }
 
     try {
       const res: Response = await fetch("/api/send-email", {
