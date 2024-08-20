@@ -45,7 +45,7 @@ import {
 } from "@/components/ui/select"
 
 // imports for date picker
-import { format } from "date-fns"
+import { format, toDate } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
  
 import { cn } from "@/lib/utils"
@@ -66,6 +66,7 @@ const dayjs = require('dayjs')
 
 
 const today:Date = dayjs().format("YYYY-MM-DD")
+console.log(today)
 
   
 export const formSchema = z.object({
@@ -142,7 +143,7 @@ export type Schema = z.infer<typeof formSchema>
 
 
 // eslint-disable-next-line import/prefer-default-export
-export function BookingForm( { currentAgent }: { currentAgent:string|undefined} ) {
+export function BookingForm( { currentAgent }: { currentAgent:string|undefined}, { event_date }: {event_date:string|undefined} ) {
 
 
 
@@ -270,10 +271,13 @@ const form = useForm<z.infer<typeof formSchema>>({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setSubmitClicked(true);
-    console.log("submit");
+
     if (currentAgent) {
       values.agent = currentAgent.toString();
     }
+   
+
+
     try {
       const res: Response = await fetch("/api/send-email", {
         method: "POST",
